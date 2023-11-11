@@ -1,17 +1,19 @@
 package com.ucu.obligatoriobasededatos2023.login;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table
+@Table(name = "login")
 public class Login {
-    @Id
 
-    private  long logId;
+    @Id
+    @Column(name = "LogId")
+    private long logId;
+
+    @Column(name = "Password")
     private String password;
+
 
 
     public Login(long logId, String password) {
@@ -38,4 +40,10 @@ public class Login {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void setLogId(Long logId) {
+        this.logId = logId;
+    }
+
+
 }
