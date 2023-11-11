@@ -18,4 +18,16 @@ public class LoginService {
     public List<Login> getLogins() {
         return loginRepository.findAll();
     }
+
+    public void addLogin(Login login) {
+        loginRepository.save(login);
+    }
+
+    public void deleteLogin(long logId) {
+        boolean loginExists = loginRepository.existsById(logId);
+        if (loginExists){
+            loginRepository.deleteById(logId);
+        }
+
+    }
 }
