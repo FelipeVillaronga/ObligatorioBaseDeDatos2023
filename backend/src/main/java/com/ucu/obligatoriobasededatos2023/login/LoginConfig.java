@@ -12,11 +12,11 @@ public class LoginConfig {
     CommandLineRunner commandLineRunner(LoginRepository loginRepository) {
         return args -> {
             Login login1 = new Login(
-                    1,  // Proporciona un valor específico para LogId
+                    1,
                     "login1"
             );
             Login login2 = new Login(
-                    2,  // Proporciona un valor específico para LogId
+                    2,
                     "login2"
             );
 
