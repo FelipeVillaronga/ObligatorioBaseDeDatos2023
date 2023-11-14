@@ -22,12 +22,10 @@ public class FuncionarioConfig {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         return args -> {
-            // Primero, guardas el Login si no existe
-            Login login = new Login(1001, "contraseña");
-            Login login2 = new Login(1002, "contraseña");
-            loginRepository.saveAll(List.of(login, login2));
 
-            // Luego, creas el Funcionario con la referencia al Login existente
+            Login login = loginRepository.findById(1L).get();
+            Login login2 = loginRepository.findById(2L).get();
+
             Funcionario funcionario1 = new Funcionario(
                     56223274,
                     "Tomas",
