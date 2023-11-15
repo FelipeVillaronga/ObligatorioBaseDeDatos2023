@@ -1,0 +1,62 @@
+<div class="container">
+    <h1>Formulario de Registro</h1>
+    <form #employeeForm="ngForm" (ngSubmit)="registerEmployee()">
+        <div class="form-group">
+            <label for="ci">C.I</label>
+            <input type="text" class="form-control" id="ci" required [(ngModel)]="model.ci" name="ci"
+                #ci="ngModel">
+            <div [hidden]="ci.valid || ci.pristine" class="alert alert-danger">
+                El campo 'C.I' es obligatorio
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name"
+                #name="ngModel">
+            <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                El campo 'Nombre' es obligatorio
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="surname">Apellido</label>
+            <input type="text" class="form-control" id="surname" required [(ngModel)]="model.surname" name="surname"
+                #surname="ngModel">
+            <div [hidden]="surname.valid || surname.pristine" class="alert alert-danger">
+                El campo 'Apellido' es obligatorio
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="birth_date">Fecha de Nacimiento (MM/DD/YYYY)</label>
+            <input type="text" class="form-control" id="birth_date" required [(ngModel)]="model.birth_date" name="birth_date"
+                #birth_date="ngModel">
+            <div [hidden]="birth_date.valid || birth_date.pristine" class="alert alert-danger">
+                El campo 'Fecha de Nacimiento' es obligatorio
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="address">Direccion</label>
+            <input type="text" class="form-control" id="address" required [(ngModel)]="model.address" name="address"
+                #address="ngModel">
+            <div [hidden]="address.valid || address.pristine" class="alert alert-danger">
+                El campo 'Direccion' es obligatorio
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phone_number">Telefono</label>
+            <input type="text" class="form-control" id="phone_number" required [(ngModel)]="model.phone_number" name="phone_number"
+                #phone_number="ngModel">
+            <div [hidden]="phone_number.valid || phone_number.pristine" class="alert alert-danger">
+                El campo 'Telefono' es obligatorio
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" id="email" required [(ngModel)]="model.email" name="email"
+                #email="ngModel">
+            <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+                El campo 'Email' es obligatorio
+            </div>
+        </div>
+        <button type="submit" class="btn" [class.btn-success]="employeeForm.form.valid" [class.btn-danger]="!employeeForm.form.valid" [disabled]="!employeeForm.form.valid">Registrar Funcionario</button>
+    </form>
+</div>
