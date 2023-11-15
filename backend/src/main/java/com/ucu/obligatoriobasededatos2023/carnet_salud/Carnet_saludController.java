@@ -32,4 +32,8 @@ public class Carnet_saludController {
         carnet_saludService.deleteCarnet_salud(ci);
     }
 
+    @PutMapping(path = "{ci}")
+    public void updateCarnet_salud(@PathVariable("ci") long ci, @RequestBody Carnet_salud carnet_salud) {
+        carnet_saludService.updateCarnet_salud(ci, carnet_salud);
+    }
 }

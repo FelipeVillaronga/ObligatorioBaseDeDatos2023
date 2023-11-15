@@ -31,5 +31,9 @@ public class Periodo_actualizacionController {
     public void deletePeriodo_actualizacion(@PathVariable("anio") long anio) {
         periodo_actualizacionService.deletePeriodo_actualizacion(anio);
     }
+    @PutMapping(path = "{anio}")
+    public void updatePeriodo_actualizacion(@PathVariable("anio") long anio, @RequestBody Periodos_actualizacion periodo_actualizacion) {
+        periodo_actualizacionService.updatePeriodo_actualizacion(anio,periodo_actualizacion);
+    }
 
 }

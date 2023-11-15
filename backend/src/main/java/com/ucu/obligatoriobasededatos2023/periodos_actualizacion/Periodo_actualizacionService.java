@@ -31,4 +31,7 @@ public class Periodo_actualizacionService {
         }
 
     }
+    public void updatePeriodo_actualizacion(long anio, Periodos_actualizacion periodosActualizacion) {
+        periodo_actualizacionRepository.save(periodosActualizacion);
+    }
 }

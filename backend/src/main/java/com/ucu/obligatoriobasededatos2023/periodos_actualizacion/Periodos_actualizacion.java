@@ -59,9 +59,10 @@ public class Periodos_actualizacion {
     @Id
     @Column(name = "Semestre")
     private long semestre;
-
+    @Id
     @Column(name = "Fch_Inicio")
     private Date fch_inicio;
+    @Id
     @Column(name = "Fch_Fin")
     private Date fch_fin;
 

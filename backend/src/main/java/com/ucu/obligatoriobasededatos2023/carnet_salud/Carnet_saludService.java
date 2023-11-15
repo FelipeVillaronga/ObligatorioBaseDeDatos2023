@@ -32,4 +32,8 @@ public class Carnet_saludService {
         }
 
     }
+    public void updateCarnet_salud(long ci, Carnet_salud carnet_salud) {
+        carnet_saludRepository.save(carnet_salud);
+
+    }
 }

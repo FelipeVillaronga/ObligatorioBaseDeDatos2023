@@ -26,14 +26,9 @@ public class Carnet_saludConfig {
                     dateFormat.parse("2023-12-05"),
                     "1001"
             );
-            Carnet_salud carnet_salud2 = new Carnet_salud(
-                    funcionario2,
-                    dateFormat.parse("2022-11-05"),
-                    dateFormat.parse("2023-11-05"),
-                    "1002"
-            );
 
-            carnet_saludRepository.saveAll(List.of(carnet_salud1, carnet_salud2));
+
+            carnet_saludRepository.saveAll(List.of(carnet_salud1, carnet_salud1));
         };
     }
 }

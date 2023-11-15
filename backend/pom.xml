@@ -67,6 +67,13 @@
 			<artifactId>spring-beans</artifactId>
 			<version>6.0.13</version>
 		</dependency>
+		<!-- Email-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+
+		</dependency>
+
 
 	</dependencies>
 

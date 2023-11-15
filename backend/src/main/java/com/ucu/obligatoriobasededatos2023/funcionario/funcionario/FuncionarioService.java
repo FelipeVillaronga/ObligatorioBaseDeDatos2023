@@ -30,4 +30,13 @@ public class FuncionarioService {
         }
 
     }
+
+    public List<Funcionario> obtenerFuncionariosSinFormulario() {
+        List<Funcionario> a = funcionarioRepository.findFuncionariosSinFormulario();
+        for (Funcionario b: a
+             ) {
+            System.out.println(b.getApellido());
+        }
+    return a;
+    }
 }
