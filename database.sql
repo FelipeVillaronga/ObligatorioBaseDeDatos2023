@@ -36,5 +36,5 @@ CREATE TABLE periodos_Actualizacion (
     Semestre INT,
     Fch_Inicio DATE,
     Fch_Fin DATE,
-    PRIMARY KEY (Anio, Semestre)
+    PRIMARY KEY (Anio, Semestre, Fch_Inicio, Fch_Fin)
 );
