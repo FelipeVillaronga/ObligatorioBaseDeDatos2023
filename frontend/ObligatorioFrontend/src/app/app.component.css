@@ -1,0 +1,38 @@
+.view {
+    display: block;
+}
+
+.page-header {
+	height: 65px;
+	background: #ffffff;
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 3px solid #1e3264;
+    padding: 0px 10px 0px 10px;
+}
+.logo {
+    display: flex;
+    align-self: center;
+    padding: 0px;
+    margin: 0;
+    height: inherit;
+}
+h1 {
+    text-align: center;
+    align-self: center;
+	color: #1e3264;
+	font-family: "kapra-bold", sans-serif;
+    font-weight: 850;
+	font-size: 20px;
+    margin: 0;
+}
+
+@media (min-width: 768px) {
+    .page-header {
+        justify-content: space-between;
+    }
+    h1 {
+        font-weight: 800;
+        font-size: 42px;
+    }
+}
