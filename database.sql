@@ -4,7 +4,7 @@ CREATE TABLE login (
     LogId INT PRIMARY KEY,
     Password VARCHAR(30)
 );
-CREATE TABLE funcionario (
+CREATE TABLE funcionarios (
     Ci INT PRIMARY KEY,
     Nombre VARCHAR(255),
     Apellido VARCHAR(255),
@@ -20,8 +20,8 @@ CREATE TABLE agenda (
     Nro INT,
     Ci INT,
     Fch_Agenda DATE,
-    PIMARY KEY (Nro, Ci),
-    FOREIGN KEY (Ci) REFERENCES funcionario(Ci)
+    PRIMARY KEY (Nro,Ci),
+    FOREIGN KEY (Ci) REFERENCES funcionarios(Ci)
 );
 CREATE TABLE carnet_Salud (
     Ci INT ,
@@ -29,7 +29,7 @@ CREATE TABLE carnet_Salud (
     Fch_Vencimiento DATE,
     Comprobante VARCHAR(100),
     PRIMARY KEY (Ci, Fch_Emision),
-    FOREIGN KEY (Ci) REFERENCES Funcionarios(Ci)
+    FOREIGN KEY (Ci) REFERENCES funcionarios(Ci)
 );
 CREATE TABLE periodos_Actualizacion (
     Anio INT,
