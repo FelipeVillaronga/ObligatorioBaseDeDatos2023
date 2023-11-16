@@ -29,7 +29,7 @@ CREATE TABLE carnet_Salud (
     Fch_Vencimiento DATE,
     Comprobante VARCHAR(100),
     PRIMARY KEY (Ci, Fch_Emision),
-    FOREIGN KEY (Ci) REFERENCES Funcionarios(Ci)
+    FOREIGN KEY (Ci) REFERENCES funcionario(Ci)
 );
 CREATE TABLE periodos_Actualizacion (
     Anio INT,
