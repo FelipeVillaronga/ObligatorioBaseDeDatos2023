@@ -2,9 +2,11 @@ package com.ucu.obligatoriobasededatos2023.login;
 
 
 import jakarta.persistence.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Entity
 @Table(name = "login")
+@CrossOrigin(origins = "http://localhost:4200")
 public class Login {
 
     @Id

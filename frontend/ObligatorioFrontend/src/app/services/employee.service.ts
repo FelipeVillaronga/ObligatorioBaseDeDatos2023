@@ -12,7 +12,7 @@ export class EmployeeService {
 
   private cachedEmployee: IEmployee | null = null;
 
-  private employeesUrl = 'api/employee';  // URL to web api
+  private employeesUrl = 'http://localhost:8080/api/login';  // URL to web api
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

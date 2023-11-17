@@ -3,11 +3,13 @@ package com.ucu.obligatoriobasededatos2023.funcionario.funcionario;
 
 import com.ucu.obligatoriobasededatos2023.login.Login;
 import jakarta.persistence.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "funcionarios")
+@CrossOrigin(origins = "http://localhost:4200")
 public class Funcionario {
 
     @Id

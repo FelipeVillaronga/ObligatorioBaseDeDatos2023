@@ -18,11 +18,12 @@ public class LoginController {
     @GetMapping
     public List<Login> getLogins() {
         return loginService.getLogins();
+
     }
 
     @PostMapping
-    public void addLogin(@RequestBody Login login) {
-    loginService.addLogin(login);
+    public boolean addLogin(@RequestBody Login login) {
+    return loginService.addLogin(login);
     }
 
     @DeleteMapping(path = "{logId}")
