@@ -1,10 +1,9 @@
 <nav>
     <a routerLink="/register">Registrarme</a>
 </nav>
-
-
-    <div class="container">
-        <h1>Formulario de Registro</h1>
+<div class="page">
+    <div class="form-container">
+        <h2 class="form-title">Formulario de Registro</h2>
         <form #loginForm="ngForm" (ngSubmit)="loginSubmit()">
             <div class="form-group">
                 <label for="LogId">LogID</label>
@@ -16,15 +15,14 @@
             </div>
             <div class="form-group">
                 <label for="password">password</label>
-                <input type="text" class="form-control" id="password" required [(ngModel)]="model.password" name="password"
-                    #password="ngModel">
+                <input type="text" class="form-control" id="password" required [(ngModel)]="model.password"
+                    name="password" #password="ngModel">
                 <div [hidden]="password.valid || password.pristine" class="alert alert-danger">
                     El campo 'password' es obligatorio
                 </div>
-                <button type="submit" class="btn" [class.btn-success]="loginForm.form.valid" [class.btn-danger]="!loginForm.form.valid" [disabled]="!loginForm.form.valid">Login</button>
-
+                <button type="submit" class="btn" [class.btn-success]="loginForm.form.valid"
+                    [class.btn-danger]="!loginForm.form.valid" [disabled]="!loginForm.form.valid">Login</button>
             </div>
         </form>
     </div>
-    
-        
+</div>

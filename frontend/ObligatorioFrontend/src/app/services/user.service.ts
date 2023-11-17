@@ -21,35 +21,35 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  /** GET employees from the server
+  /** GET users from the server
    * 
    * @returns 
    */
-  getEmployees(): Observable<IUser[]> {
+  getUsers(): Observable<IUser[]> {
     return this.http.get<IUser[]>(this.usersUrl)
       .pipe(
-        tap(_ => console.log('fetched employees')),
-        catchError(this.handleError<IUser[]>('getEmployees', []))
+        tap(_ => console.log('fetched users')),
+        catchError(this.handleError<IUser[]>('getUsers', []))
       );
   }
 
-  /** GET employee by ci. Will 404 if ci not found 
+  /** GET user by ci. Will 404 if ci not found 
    * 
    * Checks if the ci equals to the cachedUser (avoiding api request).
    * 
    * @param ci
   */
-  getEmployee(ci: number): Observable<IUser> {
+  getUser(ci: number): Observable<IUser> {
     if (this.cachedUser && this.cachedUser.ci === ci) {
       return of(this.cachedUser);
     } else {
       const url = `${this.usersUrl}/${ci}`;
       return this.http.get<IUser>(url).pipe(
-        tap((employee: IUser) => {
-          this.cachedUser = employee;
-          console.log(`fetched employee id=${ci}`);
+        tap((user: IUser) => {
+          this.cachedUser = user;
+          console.log(`fetched user id=${ci}`);
         }),
-        catchError(this.handleError<IUser>(`getEmployee id=${ci}`))
+        catchError(this.handleError<IUser>(`getUser id=${ci}`))
       );
     }
   }
@@ -66,10 +66,14 @@ export class UserService {
    * @param log_id 
    * @returns 
    */
-  add(ci: number, name: string, surname: string, birth_date: Date, address: string, phone_number: string, email: string): Observable<IUser> {
-    return this.http.post<IUser>(this.usersUrl, { ci, name, surname, birth_date, address, phone_number, email }, this.httpOptions)
+  add(ci: number, name: string, surname: string, birth_date: Date, address: string, phone_number: string, email: string, username: string, password: string): Observable<IUser> {
+    return this.http.post<IUser>(this.usersUrl, { ci, name, surname, birth_date, address, phone_number, email, username, password }, this.httpOptions)
       .pipe(
-        tap((newUser: IUser) => console.log(`added employee w/ id=${newUser.ci}`)),
+        tap((newUser: IUser) => {
+          console.log(`added user w/ id=${newUser.ci}`);
+          alert('Usuario registrado con exito!');
+          // llevar a 'lobby'
+        }),
         catchError(this.handleError<IUser>('add'))
       );
   }
@@ -92,8 +96,8 @@ export class UserService {
       );
   }
 
-  submitData(ci: number, name: string, surname: string, birth_date: Date): Observable<IUser>{
-    return this.http.post<IUser>('api/carnet_salud', { ci, name, surname, birth_date}, this.httpOptions)
+  submitData(ci: number, name: string, surname: string, birth_date: Date): Observable<IUser> {
+    return this.http.post<IUser>('api/carnet_salud', { ci, name, surname, birth_date }, this.httpOptions)
       .pipe(
         tap((newUser: IUser) => console.log(`added employee w/ id=${newUser.ci}`)),
         catchError(this.handleError<IUser>('add'))
