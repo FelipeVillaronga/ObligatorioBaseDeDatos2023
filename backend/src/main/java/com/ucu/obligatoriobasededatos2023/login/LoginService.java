@@ -2,7 +2,6 @@ package com.ucu.obligatoriobasededatos2023.login;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -19,8 +18,9 @@ public class LoginService {
         return loginRepository.findAll();
     }
 
-    public void addLogin(Login login) {
-        loginRepository.save(login);
+    public boolean addLogin(Login login) {
+        String password = loginRepository.findLoginByLogId(login.getLogId());
+        return password.equals(login.getPassword());
     }
 
     public void deleteLogin(long logId) {
@@ -28,6 +28,5 @@ public class LoginService {
         if (loginExists){
             loginRepository.deleteById(logId);
         }
-
     }
 }
