@@ -21,8 +21,8 @@ export class EmployeeService {
   constructor(private http: HttpClient) { }
 
   /** GET employees from the server
-   * 
-   * @returns 
+   *
+   * @returns
    */
   getEmployees(): Observable<IEmployee[]> {
     return this.http.get<IEmployee[]>(this.employeesUrl)
@@ -32,10 +32,10 @@ export class EmployeeService {
       );
   }
 
-  /** GET employee by ci. Will 404 if ci not found 
-   * 
+  /** GET employee by ci. Will 404 if ci not found
+   *
    * Checks if the ci equals to the cachedEmployee (avoiding api request).
-   * 
+   *
    * @param ci
   */
   getEmployee(ci: number): Observable<IEmployee> {
@@ -54,16 +54,16 @@ export class EmployeeService {
   }
 
   /** POST - add new employee to the server
-   * 
-   * @param ci 
-   * @param name 
-   * @param surname 
-   * @param birth_date 
-   * @param address 
-   * @param phone_number 
-   * @param email 
-   * @param log_id 
-   * @returns 
+   *
+   * @param ci
+   * @param name
+   * @param surname
+   * @param birth_date
+   * @param address
+   * @param phone_number
+   * @param email
+   * @param log_id
+   * @returns
    */
   add(ci: number, name: string, surname: string, birth_date: Date, address: string, phone_number: string, email: string): Observable<IEmployee> {
     return this.http.post<IEmployee>('api/register', { ci, name, surname, birth_date, address, phone_number, email }, this.httpOptions)
@@ -73,10 +73,18 @@ export class EmployeeService {
     );
   }
 
+  submitData(ci: number, name: string, surname: string, birth_date: Date): Observable<IEmployee>{
+    return this.http.post<IEmployee>('api/carnet_salud', { ci, name, surname, birth_date}, this.httpOptions)
+      .pipe(
+        tap((newEmployee: IEmployee) => console.log(`added employee w/ id=${newEmployee.ci}`)),
+        catchError(this.handleError<IEmployee>('add'))
+      );
+  }
+
   /**
  * Handle Http operation that failed.
  * Let the app continue.
- * 
+ *
  * @param operation - name of the operation that failed
  * @param result - optional value to return as the observable result
  */

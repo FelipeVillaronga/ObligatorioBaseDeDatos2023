@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
+import { UpdateComponent } from './components/update/update.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    UpdateComponent
   ],
   imports: [
     BrowserModule,
