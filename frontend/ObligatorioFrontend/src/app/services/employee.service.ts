@@ -12,7 +12,7 @@ export class EmployeeService {
 
   private cachedEmployee: IEmployee | null = null;
 
-  private employeesUrl = 'api/employee';  // URL to web api
+  private employeesUrl = 'http://localhost:8080/api/funcionarios';  // URL to web api
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -66,7 +66,7 @@ export class EmployeeService {
    * @returns 
    */
   add(ci: number, name: string, surname: string, birth_date: Date, address: string, phone_number: string, email: string): Observable<IEmployee> {
-    return this.http.post<IEmployee>('api/register', { ci, name, surname, birth_date, address, phone_number, email }, this.httpOptions)
+    return this.http.post<IEmployee>(this.employeesUrl, { ci, name, surname, birth_date, address, phone_number, email }, this.httpOptions)
     .pipe(
       tap((newEmployee: IEmployee) => console.log(`added employee w/ id=${newEmployee.ci}`)),
       catchError(this.handleError<IEmployee>('add'))
