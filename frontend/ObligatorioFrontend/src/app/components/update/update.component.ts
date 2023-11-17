@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {EmployeeService} from "../../services/employee.service";
+import { UserService } from "../../services/user.service";
 
 @Component({
   selector: 'app-update',
@@ -8,16 +8,16 @@ import {EmployeeService} from "../../services/employee.service";
 })
 export class UpdateComponent {
 
-  constructor(private employeeService: EmployeeService) {
+  constructor(private userService: UserService) {
   }
 
-  model= {ci: '', name: '', surname: '', birth_date: ''};
+  model = { ci: '', name: '', surname: '', birth_date: '' };
 
-  submitData(): void{
+  submitData(): void {
     try {
       let parsedCi: number = parseInt(this.model.ci, 10);
-      this.employeeService.submitData(parsedCi, this.model.name, this.model.surname, new Date(this.model.birth_date));
-      this.model= {ci: '', name: '', surname: '', birth_date: '' };
+      this.userService.submitData(parsedCi, this.model.name, this.model.surname, new Date(this.model.birth_date));
+      this.model = { ci: '', name: '', surname: '', birth_date: '' };
       /*this.goBack();*/
     } catch (error) {
       alert('¡Cedula invalida!');
