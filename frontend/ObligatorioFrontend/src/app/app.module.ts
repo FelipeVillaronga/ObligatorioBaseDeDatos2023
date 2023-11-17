@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { UpdatePeriodsComponent } from './components/update-periods/update-periods.component';
+import { UpdateComponent } from './components/update/update.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { UpdatePeriodsComponent } from './components/update-periods/update-perio
     LoginComponent,
     RegisterComponent,
     ScheduleComponent,
-    UpdatePeriodsComponent
+    UpdatePeriodsComponent,
+    UpdateComponent
   ],
   imports: [
     BrowserModule,

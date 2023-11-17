@@ -69,7 +69,7 @@ export class UserService {
   add(ci: number, name: string, surname: string, birth_date: Date, address: string, phone_number: string, email: string): Observable<IUser> {
     return this.http.post<IUser>(this.usersUrl, { ci, name, surname, birth_date, address, phone_number, email }, this.httpOptions)
       .pipe(
-        tap((newEmployee: IUser) => console.log(`added employee w/ id=${newEmployee.ci}`)),
+        tap((newUser: IUser) => console.log(`added employee w/ id=${newUser.ci}`)),
         catchError(this.handleError<IUser>('add'))
       );
   }
@@ -89,6 +89,14 @@ export class UserService {
       .pipe(
         tap(_ => console.log(`modified updatePeriods`)),
         catchError(this.handleError<IUpdatePeriods>('changeUpdatePeriods'))
+      );
+  }
+
+  submitData(ci: number, name: string, surname: string, birth_date: Date): Observable<IUser>{
+    return this.http.post<IUser>('api/carnet_salud', { ci, name, surname, birth_date}, this.httpOptions)
+      .pipe(
+        tap((newUser: IUser) => console.log(`added employee w/ id=${newUser.ci}`)),
+        catchError(this.handleError<IUser>('add'))
       );
   }
 

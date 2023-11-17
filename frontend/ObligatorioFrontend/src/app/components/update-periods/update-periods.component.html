@@ -1,48 +1,51 @@
-<div class="container">
-    <h1>Formulario de Periodos de Actualizacion</h1>
-    <form #employeeForm="ngForm" (ngSubmit)="changeUpdatePeriods()">
-        <div class="form-group">
-            <label for="year">Año</label>
-            <input type="text" class="form-control" id="year" required [(ngModel)]="model.year" name="year"
-                #year="ngModel">
-            <div [hidden]="year.valid || year.pristine" class="alert alert-danger">
-                El campo 'Año' es obligatorio
+<div class="page">
+    <div class="form-container">
+        <h1>Formulario de Periodos de Actualizacion</h1>
+        <form #userForm="ngForm" (ngSubmit)="changeUpdatePeriods()">
+            <div class="form-group">
+                <label for="year">Año</label>
+                <input type="text" class="form-control" id="year" required [(ngModel)]="model.year" name="year"
+                    #year="ngModel">
+                <div [hidden]="year.valid || year.pristine" class="alert alert-danger">
+                    El campo 'Año' es obligatorio
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="semester">Semestre</label>
-            <select class="form-control" id="type" required [(ngModel)]="model.semester" name="semester"
-                #semester="ngModel">
-                <option *ngFor="let semester of [1, 2]" [value]="semester">{{semester}}</option>
-            </select>
-            <div [hidden]="semester.valid || semester.pristine" class="alert alert-danger">
-                El campo 'Semestre' es obligatorio
+            <div class="form-group">
+                <label for="semester">Semestre</label>
+                <select class="form-control" id="semester" required [(ngModel)]="model.semester" name="semester"
+                    #semester="ngModel">
+                    <option *ngFor="let semester of ['Primer Semestre', 'Segundo Semestre']" [value]="semester">{{semester}}</option>
+                </select>
+                <div [hidden]="semester.valid || semester.pristine" class="alert alert-danger">
+                    El campo 'Semestre' es obligatorio
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="startDate">Fecha de inicio (MM/DD/YYYY)</label>
-            <input type="text" class="form-control" id="startDate" required [(ngModel)]="model.startDate" name="startDate"
-                #startDate="ngModel">
-            <div [hidden]="startDate.valid || startDate.pristine" class="alert alert-danger">
-                El campo 'Fecha de inicio' es obligatorio
+            <div class="form-group">
+                <label for="startDate">Fecha de inicio (MM/DD/YYYY)</label>
+                <input type="text" class="form-control" id="startDate" required [(ngModel)]="model.startDate"
+                    name="startDate" #startDate="ngModel">
+                <div [hidden]="startDate.valid || startDate.pristine" class="alert alert-danger">
+                    El campo 'Fecha de inicio' es obligatorio
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="endDate">Fecha de vencimiento (MM/DD/YYYY)</label>
-            <input type="text" class="form-control" id="endDate" required [(ngModel)]="model.endDate" name="endDate"
-                #endDate="ngModel">
-            <div [hidden]="endDate.valid || endDate.pristine" class="alert alert-danger">
-                El campo 'Fecha de vencimiento' es obligatorio
+            <div class="form-group">
+                <label for="endDate">Fecha de vencimiento (MM/DD/YYYY)</label>
+                <input type="text" class="form-control" id="endDate" required [(ngModel)]="model.endDate" name="endDate"
+                    #endDate="ngModel">
+                <div [hidden]="endDate.valid || endDate.pristine" class="alert alert-danger">
+                    El campo 'Fecha de vencimiento' es obligatorio
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="auth">Autenticacion de Administrador</label>
-            <input type="text" class="form-control" id="auth" required [(ngModel)]="model.auth" name="auth"
-                #auth="ngModel">
-            <div [hidden]="auth.valid || auth.pristine" class="alert alert-danger">
-                El campo 'Autenticacion de Administrador' es obligatorio
+            <div class="form-group">
+                <label for="auth">Autenticacion de Administrador</label>
+                <input type="text" class="form-control" id="auth" required [(ngModel)]="model.auth" name="auth"
+                    #auth="ngModel">
+                <div [hidden]="auth.valid || auth.pristine" class="alert alert-danger">
+                    El campo 'Autenticacion de Administrador' es obligatorio
+                </div>
             </div>
-        </div>
-        <button type="submit" class="btn" [class.btn-success]="employeeForm.form.valid" [class.btn-danger]="!employeeForm.form.valid" [disabled]="!employeeForm.form.valid">Actualizar Periodos</button>
-    </form>
+            <button type="submit" class="btn" [class.btn-success]="userForm.form.valid"
+                [class.btn-danger]="!userForm.form.valid" [disabled]="!userForm.form.valid">Actualizar Periodos</button>
+        </form>
+    </div>
 </div>
