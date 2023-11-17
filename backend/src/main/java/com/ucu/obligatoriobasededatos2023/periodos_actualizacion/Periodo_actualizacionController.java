@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/periodo_actualizacion")
+@CrossOrigin(origins = "http://localhost:4200")
 public class Periodo_actualizacionController {
     private final Periodo_actualizacionService periodo_actualizacionService;
 

@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/carnet_salud")
+@CrossOrigin(origins = "http://localhost:4200")
 public class Carnet_saludController {
     private final Carnet_saludService carnet_saludService;
 

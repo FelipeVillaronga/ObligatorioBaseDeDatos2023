@@ -7,6 +7,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/agenda")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AgendaController {
     private final AgendaService agendaService;
 
