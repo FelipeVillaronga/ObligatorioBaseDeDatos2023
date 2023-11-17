@@ -1,8 +1,10 @@
 package com.ucu.obligatoriobasededatos2023.agenda;
 
+import com.ucu.obligatoriobasededatos2023.carnet_salud.Carnet_salud;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -23,7 +25,16 @@ public class AgendaController {
 
     @PostMapping
     public void addAgenda(@RequestBody Agenda agenda) {
-    agendaService.addagenda(agenda);
+    agendaService.addAgenda(agenda);
+    }
+    @PutMapping(path = "{fch_agenda}")
+    public void updateAgenga(@PathVariable("fch_agenda")Date fch_agenda, @RequestBody Agenda agenda) {
+        agendaService.updateAgenda(fch_agenda, agenda);
+    }
+
+    @GetMapping(path = "/libres")
+    public List<Agenda> getAgendasLibres() {
+        return agendaService.getAgendasLibres();
     }
 
     @DeleteMapping(path = "{nro}")

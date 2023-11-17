@@ -22,6 +22,11 @@ public class LoginService {
         String password = loginRepository.findLoginByLogId(login.getLogId());
         return password.equals(login.getPassword());
     }
+    public void addNewLogin(Login login) {
+         loginRepository.save(login);
+    }
+
+
 
     public void deleteLogin(long logId) {
         boolean loginExists = loginRepository.existsById(logId);

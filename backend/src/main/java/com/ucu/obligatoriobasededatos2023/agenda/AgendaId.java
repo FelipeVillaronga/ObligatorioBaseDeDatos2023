@@ -6,5 +6,5 @@ import java.util.Date;
 public class AgendaId implements Serializable {
     private long nro;
 
-    private long ci;
+    private Date fch_agenda;
 }

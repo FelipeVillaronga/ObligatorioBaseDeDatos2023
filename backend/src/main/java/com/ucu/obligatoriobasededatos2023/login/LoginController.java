@@ -25,6 +25,10 @@ public class LoginController {
     public boolean addLogin(@RequestBody Login login) {
     return loginService.addLogin(login);
     }
+    @PostMapping(path = "/add")
+    public void addNewLogin(@RequestBody Login login) {
+         loginService.addLogin(login);
+    }
 
     @DeleteMapping(path = "{logId}")
     public void deleteLogin(@PathVariable("logId") long logId) {

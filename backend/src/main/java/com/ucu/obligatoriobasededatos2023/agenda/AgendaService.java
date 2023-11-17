@@ -3,6 +3,7 @@ package com.ucu.obligatoriobasededatos2023.agenda;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,8 +19,12 @@ public class AgendaService {
         return agendaRepository.findAll();
     }
 
-    public void addagenda(Agenda agenda) {
+    public void addAgenda(Agenda agenda) {
         agendaRepository.save(agenda);
+    }
+
+    public List<Agenda> getAgendasLibres() {
+        return agendaRepository.findAgendasLibres();
     }
 
     public void deleteAgenda(long nro) {
@@ -28,5 +33,11 @@ public class AgendaService {
             agendaRepository.deleteById(nro);
         }
 
+    }
+
+    public void updateAgenda(Date fchAgenda, Agenda agenda) {
+        agendaRepository.delete(agenda);
+        Agenda agendaNueva = new Agenda(agenda.getNro(), agenda.getCi(), fchAgenda);
+        agendaRepository.save(agendaNueva);
     }
 }

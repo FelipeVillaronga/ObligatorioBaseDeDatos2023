@@ -1,1 +1,22 @@
-<p>schedule works!</p>
+<h1>Agendate!</h1>
+<div class="container">
+    <h2>Formulario de Agenda</h2>
+    <form #loginForm="ngForm" (ngSubmit)="scheduleSubmit()">
+        <label for="schedule_date">Fecha</label>
+        <div *ngFor="let schedule of freeSchedules">
+            <div class="form-group">
+                
+                <input type="button" class="form-control" id="schedule_date" required [(ngModel)]="model.schedule_date" [(ngModel)]="model.nro"
+                    name="schedule_date" #schedule_date="ngModel" value="{{schedule}}">
+                
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            <button type="submit" class="btn" [class.btn-success]="loginForm.form.valid"
+                [class.btn-danger]="!loginForm.form.valid" [disabled]="!loginForm.form.valid" (click)="scheduleSubmit()">Enviar</button>
+
+        </div>
+    </form>
+</div>
