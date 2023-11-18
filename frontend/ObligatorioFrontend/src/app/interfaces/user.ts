@@ -1,4 +1,6 @@
-export interface IEmployee {
+import { ILogin } from "./login";
+
+export interface IUser {
     ci : number,
     name : string,
     surname : string,
@@ -6,5 +8,5 @@ export interface IEmployee {
     address : string,
     phone_number : string,
     email : string,
-    log_id: number
+    log_id: ILogin
 }

@@ -1,6 +1,6 @@
 export interface IUpdatePeriods {
-    year : number,
-    semester : number,
+    year : string,
+    semester : string,
     start_date : Date,
     end_date : Date,
 }
