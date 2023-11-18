@@ -21,6 +21,11 @@ public class FuncionarioController {
         return funcionarioService.getFuncionarios();
     }
 
+    @GetMapping("{ci}")
+    public Funcionario getFuncionario(@PathVariable("ci") long ci) {
+        return funcionarioService.getFuncionario(ci);
+    }
+
     @PostMapping
     public void addFuncionario(@RequestBody Funcionario funcionario) {
         funcionarioService.addFuncionario(funcionario);

@@ -16,11 +16,13 @@ public class Agenda {
     @Column(name = "Nro")
     private long nro;
 
-    @Id
+
     @ManyToOne
     @JoinColumn(name = "Ci")
     private Funcionario ci;
 
+    @Id
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "Fch_Agenda")
     private Date fch_agenda;
 

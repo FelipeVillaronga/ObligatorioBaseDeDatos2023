@@ -1,1 +1,6 @@
-<p>schedule works!</p>
+<div *ngFor="let schedule of freeSchedules">
+    <div class="form-group">
+        <input type="button" [value]="schedule.fch_agenda.toString().substring(0, 10)"
+            (click)="scheduleSubmit(schedule.fch_agenda, schedule.ci, schedule.nro)" />
+    </div>
+</div>
