@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ISchedule } from '../interfaces/schedule';
-import { IEmployee } from '../interfaces/employee';
+import { IUser } from '../interfaces/user';
 
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -21,12 +21,12 @@ export class ScheduleService {
 
   constructor(private http: HttpClient) { }
 
-  sendSchedule(schedule_date: Date, employee: IEmployee, nro: number) {
-    // Formatea la fecha como una cadena en el formato esperado por el backend
-    const formattedDate = formatDate(schedule_date, 'yyyy-MM-ddTHH:mm:ss.SSSXXX', 'en-US');
-    console.log(formattedDate);
+  sendSchedule(schedule_date: Date, employee: IUser, nro: number) {
+    
+    //const formattedDate = formatDate(schedule_date, 'yyyy-MM-ddTHH:mm:ss.SSSZ', 'en-US');
+      //console.log(formattedDate);
     return this.http.put(
-      `${this.scheduleUrl}/${formattedDate}/${employee.ci}/${nro}`,
+      `${this.scheduleUrl}/${schedule_date.toISOString()}/${employee.ci}/${nro}`,
       {},  // Puedes enviar un cuerpo vacío o ajustarlo según sea necesario
       this.httpOptions
     ).pipe(

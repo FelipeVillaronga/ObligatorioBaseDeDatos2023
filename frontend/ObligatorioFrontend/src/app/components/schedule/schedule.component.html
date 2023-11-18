@@ -1,3 +1,6 @@
+<nav>
+    <a routerLink="/update">Volver</a>
+</nav>
 <div *ngFor="let schedule of freeSchedules">
     <div class="form-group">
         <input type="button" [value]="schedule.fch_agenda.toString().substring(0, 10)"

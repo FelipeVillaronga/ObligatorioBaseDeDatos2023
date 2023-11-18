@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ISchedule } from 'src/app/interfaces/schedule';
-import { IEmployee } from 'src/app/interfaces/employee';
-import { EmployeeService } from 'src/app/services/employee.service';
+import { IUser } from 'src/app/interfaces/user';
+import { UserService } from 'src/app/services/user.service';
 import { ScheduleService } from 'src/app/services/schedule.service';
 
 @Component({
@@ -14,11 +14,11 @@ export class ScheduleComponent implements OnInit {
   constructor(
     private scheduleService: ScheduleService,
     private router: Router,
-    private employeeService: EmployeeService
+    private userService: UserService
   ) { }
 
   freeSchedules: ISchedule[] = [];
-  employee: IEmployee | undefined;
+  user: IUser | undefined;
 
   ngOnInit(): void {
     this.scheduleService.getFreeSchedules().subscribe((response) => {
@@ -31,21 +31,22 @@ export class ScheduleComponent implements OnInit {
     // Convertir fch_agenda a un objeto Date si no lo es
     const schedule_date = new Date(fch_agenda);
 
-    this.employeeService.getEmployee(56223274).subscribe((response) => {
-      this.employee = response;
-      console.log(this.employee);
-      if (this.employee != null) {
-        console.log(schedule_date.getFullYear(), schedule_date.getMonth(), schedule_date.getDate());
+    this.userService.getUser(56223274).subscribe((response) => {
+      this.user = response;
+      console.log(this.user);
+      if (this.user != null) {
+        console.log(schedule_date);
         this.scheduleService
           .sendSchedule(
             schedule_date, // Convertir a cadena ISO para enviar al backend
-            this.employee,
+            this.user,
             nro
           )
           .subscribe((response) => {
             console.log(response);
             if (response) {
               console.log('sended');
+              alert('Cita agendada');
               this.router.navigate(['/schedule']);
             } else {
               alert('Credenciales incorrectas');
