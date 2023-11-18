@@ -11,4 +11,7 @@ import java.util.List;
 public interface AgendaRepository extends JpaRepository<Agenda, Long> {
     @Query("SELECT a FROM Agenda a WHERE a.ci is null")
     List<Agenda> findAgendasLibres();
+
+    @Query("SELECT a FROM Agenda a WHERE a.nro = ?1")
+    Agenda getAgendaByNro(long nro);
 }

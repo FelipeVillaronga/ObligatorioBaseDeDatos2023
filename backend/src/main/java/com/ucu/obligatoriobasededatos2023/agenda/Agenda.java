@@ -22,6 +22,7 @@ public class Agenda {
     private Funcionario ci;
 
     @Id
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "Fch_Agenda")
     private Date fch_agenda;
 

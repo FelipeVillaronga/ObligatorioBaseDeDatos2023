@@ -18,6 +18,9 @@ public class FuncionarioService {
     public List<Funcionario> getFuncionarios() {
         return funcionarioRepository.findAll();
     }
+    public Funcionario getFuncionario(long ci) {
+        return funcionarioRepository.findById(ci).orElse(null);
+    }
 
     public void addFuncionario(Funcionario funcionario) {
         funcionarioRepository.save(funcionario);

@@ -1,18 +1,25 @@
 package com.ucu.obligatoriobasededatos2023.agenda;
 
+import com.ucu.obligatoriobasededatos2023.funcionario.funcionario.Funcionario;
+import com.ucu.obligatoriobasededatos2023.funcionario.funcionario.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Date;
 
 @Service
 public class AgendaService {
     private final AgendaRepository agendaRepository;
+    private final FuncionarioRepository funcionarioRepository;
 
     @Autowired
-    public AgendaService(AgendaRepository agendaRepository) {
+    public AgendaService(AgendaRepository agendaRepository, FuncionarioRepository funcionarioRepository) {
         this.agendaRepository = agendaRepository;
+        this.funcionarioRepository = funcionarioRepository;
     }
 
     public List<Agenda> getAgendas() {
@@ -29,15 +36,23 @@ public class AgendaService {
 
     public void deleteAgenda(long nro) {
         boolean agendaExists = agendaRepository.existsById(nro);
-        if (agendaExists){
+        if (agendaExists) {
             agendaRepository.deleteById(nro);
         }
 
     }
 
-    public void updateAgenda(Date fchAgenda, Agenda agenda) {
-        agendaRepository.delete(agenda);
-        Agenda agendaNueva = new Agenda(agenda.getNro(), agenda.getCi(), fchAgenda);
-        agendaRepository.save(agendaNueva);
+    public boolean updateAgenda(long ci, String fchAgenda, long nro) throws ParseException {
+        Funcionario f = funcionarioRepository.findById((long) ci).orElse(null);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        Date fechaAgenda = dateFormat.parse(fchAgenda);
+        if (f != null) {
+            Agenda agendaNueva = new Agenda(nro, f, fechaAgenda);
+            agendaRepository.delete(agendaRepository.getAgendaByNro(nro));
+            agendaRepository.save(agendaNueva);
+            return true;
+        }
+
+        return false;
     }
 }

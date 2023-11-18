@@ -1,5 +1,5 @@
 export interface ISchedule{
     ci : number,
     nro : number,
-    schedule_date : Date,
+    fch_agenda : Date
 }

@@ -13,7 +13,7 @@ export class EmployeeService {
   private cachedEmployee: IEmployee | null = null;
 
   private employeesUrl = 'http://localhost:8080/api/login';  // URL to web api
-
+  private getEmployeeByCiUrl = 'http://localhost:8080/api/funcionarios';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -42,7 +42,7 @@ export class EmployeeService {
     if (this.cachedEmployee && this.cachedEmployee.ci === ci) {
       return of(this.cachedEmployee);
     } else {
-      const url = `${this.employeesUrl}/${ci}`;
+      const url = `${this.getEmployeeByCiUrl}/${ci}`;
       return this.http.get<IEmployee>(url).pipe(
         tap((employee: IEmployee) => {
           this.cachedEmployee = employee;
