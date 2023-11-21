@@ -7,10 +7,12 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
 
 import { UpdatePeriodsComponent } from './components/update-periods/update-periods.component';
 import {UpdateComponent} from "./components/update/update.component";
+import { IndexComponent } from './components/index/index.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/index', pathMatch: 'full' },
+  { path: 'index', component: IndexComponent},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'schedule', component: ScheduleComponent },

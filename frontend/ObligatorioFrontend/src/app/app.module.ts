@@ -10,6 +10,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { UpdatePeriodsComponent } from './components/update-periods/update-periods.component';
 import { UpdateComponent } from './components/update/update.component';
+import { IndexComponent } from './components/index/index.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { UpdateComponent } from './components/update/update.component';
     RegisterComponent,
     ScheduleComponent,
     UpdatePeriodsComponent,
-    UpdateComponent
+    UpdateComponent,
+    IndexComponent
   ],
   imports: [
     BrowserModule,
