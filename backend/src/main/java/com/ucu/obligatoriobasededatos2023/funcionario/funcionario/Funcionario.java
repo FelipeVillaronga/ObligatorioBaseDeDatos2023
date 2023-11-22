@@ -40,7 +40,7 @@ public class Funcionario {
 
 
 
-    public Funcionario(long ci, String nombre,String apellido, Date fchNacimiento, String direccion, String telefono, String email, Login LogId) {
+    public Funcionario(long ci, String nombre,String apellido, Date fchNacimiento, String direccion, String telefono, String email, Long logId, String password) {
         this.ci = ci;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -48,7 +48,7 @@ public class Funcionario {
         this.direccion = direccion;
         this.telefono = telefono;
         this.email = email;
-        this.login = LogId;
+        this.login = new Login(logId, password);
     }
 
     public Funcionario() {
