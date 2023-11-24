@@ -10,10 +10,12 @@ import java.util.List;
 @Service
 public class FuncionarioService {
     private final FuncionarioRepository funcionarioRepository;
+    private final LoginRepository loginRepository;
 
     @Autowired
-    public FuncionarioService(FuncionarioRepository funcionarioRepository) {
+    public FuncionarioService(FuncionarioRepository funcionarioRepository, LoginRepository loginRepository) {
         this.funcionarioRepository = funcionarioRepository;
+        this.loginRepository = loginRepository;
     }
     public List<Funcionario> getFuncionarios() {
         return funcionarioRepository.findAll();
@@ -23,6 +25,7 @@ public class FuncionarioService {
     }
 
     public void addFuncionario(Funcionario funcionario) {
+        loginRepository.save(funcionario.getLogin());
         funcionarioRepository.save(funcionario);
     }
 
