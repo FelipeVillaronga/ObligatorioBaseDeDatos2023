@@ -25,11 +25,12 @@ public class Carnet_salud  {
     @Column(name = "fch_emision")
     private Date fecha_emision;
 
-    @Column(name = "Comprobante")
-    private String comprobante;
+    @Lob
+    @Column(name = "Comprobante", columnDefinition = "BLOB")
+    private byte[] comprobante;
 
 
-    public Carnet_salud(Funcionario ci, Date fecha_emision, Date fecha_vencimiento, String comprobante) {
+    public Carnet_salud(Funcionario ci, Date fecha_emision, Date fecha_vencimiento, byte[] comprobante) {
         this.ci = ci;
         this.fecha_emision = fecha_emision;
         this.fecha_vencimiento = fecha_vencimiento;
@@ -66,11 +67,11 @@ public class Carnet_salud  {
         this.fecha_vencimiento = fecha_vencimiento;
     }
 
-    public String getComprobante() {
+    public byte[] getComprobante() {
         return comprobante;
     }
 
-    public void setComprobante(String comprobante) {
+    public void setComprobante(byte[] comprobante) {
         this.comprobante = comprobante;
     }
 
