@@ -11,6 +11,7 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
 import { UpdatePeriodsComponent } from './components/update-periods/update-periods.component';
 import { UpdateComponent } from './components/update/update.component';
 import { IndexComponent } from './components/index/index.component';
+import { MenuComponent } from './components/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { IndexComponent } from './components/index/index.component';
     ScheduleComponent,
     UpdatePeriodsComponent,
     UpdateComponent,
-    IndexComponent
+    IndexComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

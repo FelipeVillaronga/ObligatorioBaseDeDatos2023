@@ -31,9 +31,7 @@ export class RegisterComponent {
           next: (res: boolean) => {
             console.log(res);
             alert('Usuario registrado con éxito!');
-            
-              this.router.navigate(['/schedule']);
-            
+            this.router.navigate([`/login`]);
           },
           error: (error) => {
             console.error(error);

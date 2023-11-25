@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { IUser } from '../interfaces/user';
 
-import { Observable, of, catchError, tap, throwError } from 'rxjs';
+import { Observable, of, catchError, tap, throwError, map, mergeMap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { IUpdatePeriods } from '../interfaces/updatePeriods';
 import { ILogin } from '../interfaces/login';
 import { LoginService } from './login.service';
 
@@ -68,10 +67,8 @@ export class UserService {
    * @returns 
    */
   add(ci: number, name: string, surname: string, birth_date: Date, address: string, phone_number: string, email: string, username: number, password: string): Observable<boolean> {
-    const log= {logId: username, password: password} as ILogin;
-    
-    //this.loginService.addLogin(username, password).subscribe();
-    
+    const log = { logId: username, password: password } as ILogin;
+
     return this.http.post<boolean>(this.usersUrl, { ci: ci, nombre: name, apellido: surname, fchNacimiento: birth_date, direccion: address, telefono: phone_number, email: email, login: log }, this.httpOptions)
       .pipe(
         tap((response) => {
@@ -82,22 +79,46 @@ export class UserService {
         catchError(this.handleError<boolean>('add'))
       );
   }
-  /** PUT - changes the update periods. Only available for admin use (auth).
+
+  /** PUT - changes the update periods. Only available for admin use (login verification)
    * 
    * @param year 
    * @param semester 
    * @param startDate 
    * @param endDate 
-   * @param auth - admin validation
+   * @param logId 
+   * @param password 
    * @returns 
    */
-  changeUpdatePeriods(year: string, semester: string, startDate: Date, endDate: Date, auth: string): Observable<IUpdatePeriods> {
-    const url = 'http://localhost:8080/api/periodo_actualizacion';
-    return this.http.put<IUpdatePeriods>(url, { year: year, semester: semester, startDate: startDate, endDate: endDate, auth: auth }, this.httpOptions)
-      .pipe(
-        tap(_ => console.log(`modified updatePeriods`)),
-        catchError(this.handleError<IUpdatePeriods>('changeUpdatePeriods'))
+  changeUpdatePeriods(year: string, semester: string, startDate: Date, endDate: Date, logId: string, password: string): Observable<boolean> {
+    try {
+      const parsedLogId: number = parseInt(logId);
+      return this.validateAdmin(parsedLogId, password).pipe(
+        mergeMap((isValid: boolean) => {
+          if (!isValid) {
+            alert('Autenticación incorrecta. Verifique la contraseña que le fue enviada por la Universidad.');
+            return of(false);
+          }
+
+          const url = 'http://localhost:8080/api/periodo_actualizacion';
+          return this.http.put<boolean>(url, { anio: year, semestre: semester, startDate, endDate }, this.httpOptions).pipe(
+            catchError(this.handleError<boolean>('changeUpdatePeriods'))
+          );
+        })
       );
+    } catch (err) {
+      return throwError(err);
+    }
+  }
+
+  private validateAdmin(logId: number, password: string): Observable<boolean> {
+    return this.loginService.sendLogin(logId, password).pipe(
+      map((response) => !!response),
+      catchError((error) => {
+        console.error(error);
+        return of(false);
+      })
+    );
   }
 
   submitData(ci: number, name: string, surname: string, birth_date: Date): Observable<IUser> {
@@ -120,10 +141,10 @@ export class UserService {
       // Log the error to a remote logging infrastructure
       // Example: Send error details to a remote server for tracking
       // RemoteLoggingService.logError(error);
-  
+
       // Log error to the console
       console.error(error);
-  
+
       // Better error handling - transform error for user consumption
       let errorMessage = 'An error occurred';
       if (error.error instanceof ErrorEvent) {
@@ -136,11 +157,11 @@ export class UserService {
         // Other error (backend or unexpected)
         errorMessage = `Error: ${error.message}`;
       }
-  
+
       // TODO: You can also notify users or display error messages here.
-  
+
       console.log(`${operation} failed: ${errorMessage}`);
-  
+
       // Rethrow the error as a user-facing error and let the app continue
       return throwError(errorMessage) as Observable<T>;
     };

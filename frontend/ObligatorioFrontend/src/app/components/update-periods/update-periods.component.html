@@ -37,11 +37,19 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="auth">Autenticacion de Administrador</label>
-                <input type="text" class="form-control" id="auth" required [(ngModel)]="model.auth" name="auth"
-                    #auth="ngModel">
-                <div [hidden]="auth.valid || auth.pristine" class="alert alert-danger">
-                    El campo 'Autenticacion de Administrador' es obligatorio
+                <label for="logId">LogId</label>
+                <input type="text" class="form-control" id="logId" required [(ngModel)]="model.logId" name="logId"
+                    #logId="ngModel">
+                <div [hidden]="logId.valid || logId.pristine" class="alert alert-danger">
+                    El campo 'LogId' es obligatorio
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="text" class="form-control" id="password" required [(ngModel)]="model.password" name="password"
+                    #password="ngModel">
+                <div [hidden]="password.valid || password.pristine" class="alert alert-danger">
+                    El campo 'Contraseña' es obligatorio
                 </div>
             </div>
             <button type="submit" class="btn" [class.btn-success]="userForm.form.valid"
