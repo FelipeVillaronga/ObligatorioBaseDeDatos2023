@@ -92,12 +92,22 @@ export class UserService {
    * @returns 
    */
   changeUpdatePeriods(year: string, semester: string, startDate: Date, endDate: Date, auth: string): Observable<IUpdatePeriods> {
+    const isValid= this.validateAdminAuth(auth);
+    if(!isValid){
+      alert('Autenticación incorrecta. Verifique la contraseña que le fue enviada por la Universidad.');
+      return of();
+    }
     const url = 'http://localhost:8080/api/periodo_actualizacion';
-    return this.http.put<IUpdatePeriods>(url, { year: year, semester: semester, startDate: startDate, endDate: endDate, auth: auth }, this.httpOptions)
+    return this.http.put<IUpdatePeriods>(url, { anio: year, semestre: semester, startDate: startDate, endDate: endDate}, this.httpOptions)
       .pipe(
         tap(_ => console.log(`modified updatePeriods`)),
         catchError(this.handleError<IUpdatePeriods>('changeUpdatePeriods'))
       );
+  }
+
+  validateAdminAuth(password: string): boolean{
+
+    return false;
   }
 
   submitData(ci: number, name: string, surname: string, birth_date: Date): Observable<IUser> {
