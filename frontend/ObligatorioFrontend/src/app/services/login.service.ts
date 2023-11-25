@@ -14,19 +14,20 @@ export class LoginService {
   };
 
   constructor(private http: HttpClient) { }
-  sendLogin( logId: number,  password:string) {
+
+  sendLogin(logId: number, password: string) {
     return this.http.post<ILogin>(this.loginUrl, { logId, password }, this.httpOptions)
-    .pipe(
-      tap(_ => console.log('fetched employees')),
-      catchError(this.handleError<ILogin[]>('sendLogin', []))
-    );
+      .pipe(
+        tap(_ => console.log('fetched employees')),
+        catchError(this.handleError<ILogin>('sendLogin'))
+      );
   }
-  addLogin( logId: number,  password:string) {
+  addLogin(logId: number, password: string) {
     return this.http.post<ILogin>(this.addLoginUrl, { logId, password }, this.httpOptions)
-    .pipe(
-      tap(_ => console.log('fetched employees')),
-      catchError(this.handleError<ILogin[]>('sendLogin', []))
-    );
+      .pipe(
+        tap(_ => console.log('fetched employees')),
+        catchError(this.handleError<ILogin>('addLogin'))
+      );
   }
 
 

@@ -1,0 +1,8 @@
+<div class="menu">
+    <button [routerLink]="'/schedule/' + currentId" routerLinkActive="active">Agendar consulta</button>
+    <button [routerLink]="'/update/' + currentId" routerLinkActive="active">Actualizar Perfil</button>
+    <button [routerLink]="'/update-periods/' + currentId" routerLinkActive="active">
+        Modificar Periodos de Actualizacion
+        <span class="admin-warning"> (solo modificable por administradores)</span>
+    </button>
+</div>

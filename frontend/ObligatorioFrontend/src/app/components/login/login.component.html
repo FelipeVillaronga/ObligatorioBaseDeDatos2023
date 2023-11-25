@@ -1,9 +1,6 @@
-<nav>
-    <a routerLink="/register">Registrarme</a>
-</nav>
 <div class="page">
     <div class="form-container">
-        <h2 class="form-title">Formulario de Registro</h2>
+        <h2 class="form-title">Inicio de Sesion</h2>
         <form #loginForm="ngForm" (ngSubmit)="loginSubmit()">
             <div class="form-group">
                 <label for="LogId">LogID</label>
@@ -22,6 +19,9 @@
                 </div>
                 <button type="submit" class="btn" [class.btn-success]="loginForm.form.valid"
                     [class.btn-danger]="!loginForm.form.valid" [disabled]="!loginForm.form.valid">Login</button>
+                <nav>
+                    <a routerLink="/register">Registrarme</a>
+                </nav>
             </div>
         </form>
     </div>

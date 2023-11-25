@@ -16,13 +16,15 @@ export class LoginComponent {
     this.loginService.sendLogin(this.model.logId, this.model.password).subscribe(
       (response) => {
         console.log(response);
-        if (response) {
-          this.router.navigate(['/register']);
+        if (response && response.logId) {
+          const id = response.logId;
+          this.router.navigate(['/menu', id]);
         } else {
           alert("Credenciales incorrectas");
         }
       }
-    )
+    );
   }
+  
 
 }
