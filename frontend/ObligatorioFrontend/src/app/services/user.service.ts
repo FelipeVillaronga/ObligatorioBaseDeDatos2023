@@ -121,7 +121,7 @@ export class UserService {
     );
   }
 
-  /** SOS UN CRA FELIPE
+  /** PUT
    * 
    * @param ci 
    * @param name 
@@ -130,15 +130,14 @@ export class UserService {
    * @param fileDetails 
    * @returns 
    */
-  submitData(ci: number, name: string, surname: string, birth_date: Date, fileDetails: any): Observable<IUser> {
-    return this.http.post<IUser>('api/carnet_salud', { ci, fecha_emision: new Date(), fecha_vencimiento: birth_date ,comprobante: fileDetails }, this.httpOptions)
+  submitData(ci: number, expiration_date: Date, file: File): Observable<void> {
+    return this.http.put<void>(`http://localhost:8080/api/carnet_salud/${ci}`, { ci: ci, fecha_emision: new Date(), fecha_vencimiento: expiration_date, comprobante: file }, this.httpOptions)
       .pipe(
-        tap((newUser: IUser) => console.log(`added employee w/ id=${newUser.ci}`)),
-        catchError(this.handleError<IUser>('add'))
+        tap(_ => console.log(`updated user w/ id=${ci}`)),
+        catchError(this.handleError<void>('submitData'))
       );
   }
 
-  
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
