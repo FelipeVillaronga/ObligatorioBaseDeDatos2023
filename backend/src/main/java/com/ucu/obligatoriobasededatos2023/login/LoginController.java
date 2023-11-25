@@ -22,7 +22,7 @@ public class LoginController {
     }
 
     @PostMapping
-    public boolean addLogin(@RequestBody Login login) {
+    public Login addLogin(@RequestBody Login login) {
     return loginService.addLogin(login);
     }
     @PostMapping(path = "/add")

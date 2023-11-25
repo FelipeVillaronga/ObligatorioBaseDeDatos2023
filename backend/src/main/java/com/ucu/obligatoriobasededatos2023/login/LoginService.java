@@ -19,13 +19,16 @@ public class LoginService {
         return loginRepository.findAll();
     }
 
-    public boolean addLogin(Login login) {
+    public Login addLogin(Login login) {
         String password = loginRepository.findLoginByLogId(login.getLogId());
         System.out.println(password);
         if (password == null) {
-            return false;
+            return null;
         }
-        return password.equals(login.getPassword());
+        if(password.equals(login.getPassword())){
+            return login;
+        }
+        return null;
     }
     public void addNewLogin(Login login) {
         try {
