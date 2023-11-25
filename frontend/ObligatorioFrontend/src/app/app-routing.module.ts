@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'update-periods/:id', component: UpdatePeriodsComponent },
   { path: 'update/:id', component: UpdateComponent }
 
+
 ];
 
 @NgModule({

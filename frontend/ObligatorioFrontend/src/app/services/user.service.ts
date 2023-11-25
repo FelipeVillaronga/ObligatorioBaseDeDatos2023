@@ -121,48 +121,37 @@ export class UserService {
     );
   }
 
-  submitData(ci: number, name: string, surname: string, birth_date: Date): Observable<IUser> {
-    return this.http.post<IUser>('api/carnet_salud', { ci, name, surname, birth_date }, this.httpOptions)
+  /** SOS UN CRA FELIPE
+   * 
+   * @param ci 
+   * @param name 
+   * @param surname 
+   * @param birth_date 
+   * @param fileDetails 
+   * @returns 
+   */
+  submitData(ci: number, name: string, surname: string, birth_date: Date, fileDetails: any): Observable<IUser> {
+    return this.http.post<IUser>('api/carnet_salud', { ci, fecha_emision: new Date(), fecha_vencimiento: birth_date ,comprobante: fileDetails }, this.httpOptions)
       .pipe(
         tap((newUser: IUser) => console.log(`added employee w/ id=${newUser.ci}`)),
         catchError(this.handleError<IUser>('add'))
       );
   }
 
-  /**
- * Handle Http operation that failed.
- * Let the app continue.
- * 
- * @param operation - name of the operation that failed
- * @param result - optional value to return as the observable result
- */
+  
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      // Log the error to a remote logging infrastructure
-      // Example: Send error details to a remote server for tracking
-      // RemoteLoggingService.logError(error);
 
-      // Log error to the console
       console.error(error);
-
-      // Better error handling - transform error for user consumption
       let errorMessage = 'An error occurred';
       if (error.error instanceof ErrorEvent) {
-        // Client-side network error
         errorMessage = `Error: ${error.error.message}`;
       } else if (error.status) {
-        // Server-side error
         errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
       } else {
-        // Other error (backend or unexpected)
         errorMessage = `Error: ${error.message}`;
       }
-
-      // TODO: You can also notify users or display error messages here.
-
       console.log(`${operation} failed: ${errorMessage}`);
-
-      // Rethrow the error as a user-facing error and let the app continue
       return throwError(errorMessage) as Observable<T>;
     };
   }

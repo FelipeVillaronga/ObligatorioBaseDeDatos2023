@@ -1,42 +1,51 @@
-<div class="page">
-  <div class="form-container">
-    <h2 class="form-title">Formulario de actualización</h2>
-    <form #userForm="ngForm" (ngSubmit)="submitData()">
-      <div class="form-group">
-        <label for="ci">C.I</label>
-        <input type="text" class="form-control" id="ci" required [(ngModel)]="model.ci" name="ci" #ci="ngModel">
-        <div [hidden]="ci.valid || ci.pristine" class="alert alert-danger">
-          El campo 'C.I' es obligatorio
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="name">Nombre</label>
-        <input type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name" #name="ngModel">
-        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
-          El campo 'Nombre' es obligatorio
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="surname">Apellido</label>
-        <input type="text" class="form-control" id="surname" required [(ngModel)]="model.surname" name="surname"
-          #surname="ngModel">
-        <div [hidden]="surname.valid || surname.pristine" class="alert alert-danger">
-          El campo 'Apellido' es obligatorio
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="birth_date">Fecha de Nacimiento (MM/DD/YYYY)</label>
-        <input type="text" class="form-control" id="birth_date" required [(ngModel)]="model.birth_date"
-          name="birth_date" #birth_date="ngModel">
-        <div [hidden]="birth_date.valid || birth_date.pristine" class="alert alert-danger">
-          El campo 'Fecha de Nacimiento' es obligatorio
-        </div>
-      </div>
-      <div class="btn-container">
-        <button type="submit" class="btn" [class.btn-success]="userForm.form.valid"
-          [class.btn-danger]="!userForm.form.valid" [disabled]="!userForm.form.valid">Registrar
-          Funcionario</button>
-      </div>
-    </form>
+<form action="#" [formGroup]="formUpdate" (ngSubmit)="submitData()">
+  <h1>Formulario de Actualizacion</h1>
+
+  <div class="form-group">
+    <label for="ci">C.I</label>
+    <input type="text" formControlName="ci">
+    <div *ngIf="formUpdate.get('ci')?.invalid && (formUpdate.get('ci')?.dirty || formUpdate.get('ci')?.touched)" class="alert alert-danger">
+      El campo 'C.I' es obligatorio
+    </div>
   </div>
-</div>
+
+  <div class="form-group">
+    <label for="name">Nombre</label>
+    <input type="text" formControlName="name">
+    <div *ngIf="formUpdate.get('name')?.invalid && (formUpdate.get('name')?.dirty || formUpdate.get('name')?.touched)" class="alert alert-danger">
+      El campo 'Nombre' es obligatorio
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="surname">Apellido</label>
+    <input type="text" formControlName="surname">
+    <div *ngIf="formUpdate.get('surname')?.invalid && (formUpdate.get('surname')?.dirty || formUpdate.get('surname')?.touched)" class="alert alert-danger">
+      El campo 'Apellido' es obligatorio
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="expiration_date">Fecha de Expiración</label>
+    <input type="date" formControlName="expiration_date">
+    <div *ngIf="formUpdate.get('expiration_date')?.invalid && (formUpdate.get('expiration_date')?.dirty || formUpdate.get('expiration_date')?.touched)" class="alert alert-danger">
+      El campo 'Fecha de Nacimiento' es obligatorio
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="file">Archivo</label>
+    <input type="file" (change)="handleFileUpload($event)" formControlName="file">
+    <div *ngIf="formUpdate.get('file')?.value">
+      <p>Nombre del archivo: {{ formUpdate.get('file')?.value.name }}</p>
+      <p>Tipo de archivo: {{ formUpdate.get('file')?.value.type }}</p>
+      <p>Tamaño del archivo: {{ formUpdate.get('file')?.value.size }} bytes</p>
+    </div>
+  </div>
+
+  <div class="btn-container">
+    <button type="submit" class="btn" [class.btn-success]="formUpdate.valid" [class.btn-danger]="!formUpdate.valid" [disabled]="!formUpdate.valid">
+      Registrar Funcionario
+    </button>
+  </div>
+</form>
