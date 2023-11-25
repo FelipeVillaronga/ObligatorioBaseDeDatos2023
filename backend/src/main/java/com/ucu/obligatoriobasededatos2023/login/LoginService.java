@@ -21,6 +21,10 @@ public class LoginService {
 
     public Login addLogin(Login login) {
         String password = loginRepository.findLoginByLogId(login.getLogId());
+        System.out.println(password);
+        if (password == null) {
+            return null;
+        }
         if(password.equals(login.getPassword())){
             return login;
         }
@@ -30,8 +34,7 @@ public class LoginService {
         try {
             loginRepository.save(login);
         } catch (DataIntegrityViolationException ex) {
-            // Manejar la excepción específica, por ejemplo, mostrar un mensaje de error.
-            // También puedes realizar alguna acción específica según tus necesidades.
+            
             System.err.println("Error: El usuario ya existe con el mismo LogId.");
         }
     }
