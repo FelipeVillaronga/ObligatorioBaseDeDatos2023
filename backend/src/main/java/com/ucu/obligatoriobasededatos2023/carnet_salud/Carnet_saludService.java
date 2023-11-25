@@ -33,6 +33,7 @@ public class Carnet_saludService {
 
     }
     public void updateCarnet_salud(long ci, Carnet_salud carnet_salud) {
+        deleteCarnet_salud(ci);
         carnet_saludRepository.save(carnet_salud);
 
     }
