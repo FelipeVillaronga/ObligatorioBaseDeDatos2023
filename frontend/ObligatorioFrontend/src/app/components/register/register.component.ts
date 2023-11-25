@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { pipe, catchError } from 'rxjs';
 import { IUser } from 'src/app/interfaces/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -10,7 +11,7 @@ import { IUser } from 'src/app/interfaces/user';
 })
 export class RegisterComponent {
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   model = { ci: '', name: '', surname: '', birth_date: '', address: '', email: '', phone_number: '', username: '', password: '' };
 
@@ -27,10 +28,12 @@ export class RegisterComponent {
           })
         )
         .subscribe({
-          next: (response: IUser) => {
-            console.log(response);
+          next: (res: boolean) => {
+            console.log(res);
             alert('Usuario registrado con éxito!');
-            // llevar a menu
+            
+              this.router.navigate(['/schedule']);
+            
           },
           error: (error) => {
             console.error(error);

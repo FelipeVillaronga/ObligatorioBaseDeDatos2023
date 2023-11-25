@@ -27,7 +27,7 @@ public class LoginController {
     }
     @PostMapping(path = "/add")
     public void addNewLogin(@RequestBody Login login) {
-         loginService.addLogin(login);
+         loginService.addNewLogin(login);
     }
 
     @DeleteMapping(path = "{logId}")

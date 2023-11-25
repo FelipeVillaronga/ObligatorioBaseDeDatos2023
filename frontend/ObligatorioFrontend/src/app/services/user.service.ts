@@ -5,6 +5,7 @@ import { Observable, of, catchError, tap, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IUpdatePeriods } from '../interfaces/updatePeriods';
 import { ILogin } from '../interfaces/login';
+import { LoginService } from './login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class UserService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public loginService: LoginService) { }
 
   /** GET users from the server
    * 
@@ -66,19 +67,21 @@ export class UserService {
    * @param log_id 
    * @returns 
    */
-  add(ci: number, name: string, surname: string, birth_date: Date, address: string, phone_number: string, email: string, username: number, password: string): Observable<IUser> {
+  add(ci: number, name: string, surname: string, birth_date: Date, address: string, phone_number: string, email: string, username: number, password: string): Observable<boolean> {
     const log= {logId: username, password: password} as ILogin;
-    return this.http.post<IUser>(this.usersUrl, { ci: ci, nombre: name, apellido: surname, fchNacimiento: birth_date, direccion: address, telefono: phone_number, email: email, login: log }, this.httpOptions)
+    
+    //this.loginService.addLogin(username, password).subscribe();
+    
+    return this.http.post<boolean>(this.usersUrl, { ci: ci, nombre: name, apellido: surname, fchNacimiento: birth_date, direccion: address, telefono: phone_number, email: email, login: log }, this.httpOptions)
       .pipe(
-        tap((newUser: IUser) => {
-          console.log(`added user w/ id=${newUser.ci}`);
+        tap((response) => {
+          console.log(`added user w/ id=${response}`);
           alert('Usuario registrado con exito!');
           // llevar a 'lobby'
         }),
-        catchError(this.handleError<IUser>('add'))
+        catchError(this.handleError<boolean>('add'))
       );
   }
-
   /** PUT - changes the update periods. Only available for admin use (auth).
    * 
    * @param year 
