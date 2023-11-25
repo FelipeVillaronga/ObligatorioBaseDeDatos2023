@@ -75,6 +75,4 @@ public class Carnet_salud  {
         this.comprobante = comprobante;
     }
 
-
-
 }

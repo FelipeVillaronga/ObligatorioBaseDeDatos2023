@@ -35,6 +35,7 @@ public class Carnet_saludController {
 
     @PutMapping(path = "{ci}")
     public void updateCarnet_salud(@PathVariable("ci") long ci, @RequestBody Carnet_salud carnet_salud) {
+        System.out.println(ci);
         carnet_saludService.updateCarnet_salud(ci, carnet_salud);
     }
 }
