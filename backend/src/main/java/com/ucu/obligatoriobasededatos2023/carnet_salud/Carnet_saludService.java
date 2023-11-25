@@ -34,8 +34,7 @@ public class Carnet_saludService {
     }
     public void updateCarnet_salud(long ci, Carnet_salud carnet_salud) {
         deleteCarnet_salud(ci);
-        Carnet_salud c = new Carnet_salud(carnet_salud.getCi(), carnet_salud.getFecha_emision(), carnet_salud.getFecha_vencimiento(),carnet_salud.getComprobante());
-        carnet_saludRepository.save(c);
+        carnet_saludRepository.save(carnet_salud);
 
     }
 }
