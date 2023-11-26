@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IUser } from '../interfaces/user';
 
-import { Observable, of, catchError, tap, throwError, map, mergeMap } from 'rxjs';
+import { Observable, of, catchError, tap, throwError, map, mergeMap, switchMap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ILogin } from '../interfaces/login';
 import { LoginService } from './login.service';
@@ -101,13 +101,13 @@ export class UserService {
             return of(false);
           }
           let anio = parseInt(year);
-          const url = 'http://localhost:8080/api/periodo_actualizacion'; 
+          const url = 'http://localhost:8080/api/periodo_actualizacion';
           let sem = 1
-          if(semester == "Segundo Semestre"){
+          if (semester == "Segundo Semestre") {
             sem = 2
           }
           console.log(anio, sem, startDate, endDate);
-          return this.http.post<boolean>(`${url}`, { anio: anio, semestre: sem, fch_inicio: startDate,  fch_fin: endDate }, this.httpOptions).pipe(
+          return this.http.post<boolean>(`${url}`, { anio: anio, semestre: sem, fch_inicio: startDate, fch_fin: endDate }, this.httpOptions).pipe(
             catchError(this.handleError<boolean>('changeUpdatePeriods'))
           );
         })
@@ -116,34 +116,32 @@ export class UserService {
       return throwError(err);
     }
   }
+
   getMostRecentPeriod(): Observable<boolean> {
     const currentDate: Date = new Date();
-
     const url = 'http://localhost:8080/api/periodo_actualizacion';
 
     return this.http.get<any[]>(url).pipe(
-        tap(_ => console.log('fetched update periods')),
-        map((periods: any[]) => {
-          console.log(periods);
-            const closestFuturePeriod = periods.find((period: any) => {
-                const startDate = new Date(period.fch_inicio);
-                const endDate = new Date(period.fch_fin);
+      tap(_ => console.log('fetched update periods')),
+      map((periods: any[]) => {
+        console.log(periods);
+        const closestFuturePeriod = periods.find((period: any) => {
+          const startDate = new Date(period.fch_inicio);
+          const endDate = new Date(period.fch_fin);
 
-               
-                if (parseInt(period.anio) >= currentDate.getFullYear() &&
-                    currentDate >= startDate && currentDate <= endDate) {
-                    return true;
-                }
+          if (parseInt(period.anio) >= currentDate.getFullYear() &&
+            currentDate >= startDate && currentDate <= endDate) {
+            return true;
+          }
+          return false;
+        });
 
-                return false;
-            });
 
-          
-            return !!closestFuturePeriod;
-        }),
-        catchError(this.handleError<boolean>('getMostRecentPeriod'))
+        return !!closestFuturePeriod;
+      }),
+      catchError(this.handleError<boolean>('getMostRecentPeriod'))
     );
-}
+  }
 
 
 
@@ -157,7 +155,7 @@ export class UserService {
     );
   }
 
-  /** SOS UN CRA FELIPE
+  /** PUT
    * 
    * @param ci 
    * @param name 
@@ -166,12 +164,41 @@ export class UserService {
    * @param fileDetails 
    * @returns 
    */
-  submitData(ci: number, name: string, surname: string, birth_date: Date, fileDetails: any): Observable<IUser> {
-    return this.http.post<IUser>('api/carnet_salud', { ci, fecha_emision: new Date(), fecha_vencimiento: birth_date ,comprobante: fileDetails }, this.httpOptions)
-      .pipe(
-        tap((newUser: IUser) => console.log(`added employee w/ id=${newUser.ci}`)),
-        catchError(this.handleError<IUser>('add'))
-      );
+  submitData(ci: number, expiration_date: string, file: File): Observable<void> {
+    return new Observable(observer => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        const base64File = reader.result as string;
+        const base64Data = base64File.split(',')[1];
+        const now = new Date();
+        const fecha_emision = now.toISOString();
+        expiration_date = new Date(expiration_date).toISOString();
+
+        this.getUser(ci).pipe(
+          catchError((error) => {
+            console.error(error);
+            alert('Ocurrió un error al encontrar el usuario. Por favor, intenta nuevamente.');
+            return throwError(error);
+          }),
+          switchMap((funcionario: IUser) => {
+            return this.http.post<void>(`http://localhost:8080/api/carnet_salud`, {
+              ci: funcionario,
+              fecha_emision: fecha_emision,
+              fecha_vencimiento: expiration_date,
+              comprobante: base64Data
+            }, this.httpOptions).pipe(
+              tap(_ => console.log(`updated user w/ id=${ci}`)),
+              catchError((error) => {
+                console.error(error);
+                alert('Ocurrió un error al actualizar el carnet de salud. Por favor, intenta nuevamente.');
+                return throwError(error);
+              })
+            );
+          })
+        ).subscribe(result => observer.next(result), error => observer.error(error));
+      };
+    });
   }
 
   getUserByLogId(logId: number): Observable<IUser> {
@@ -181,10 +208,9 @@ export class UserService {
       tap(_ => console.log(`fetched user id=${logId}`)),
       catchError(this.handleError<IUser>(`getUser id=${logId}`))
     );
-    
+
   }
 
-  
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

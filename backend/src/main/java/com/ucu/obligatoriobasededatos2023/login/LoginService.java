@@ -23,11 +23,13 @@ public class LoginService {
         String password = loginRepository.findLoginByLogId(login.getLogId());
         System.out.println(password);
         if (password == null) {
+            System.out.println("API: contraseña invalida");
             return null;
         }
         if(password.equals(login.getPassword())){
             return login;
         }
+        System.out.println("API: contraseña incorrecta");
         return null;
     }
     public void addNewLogin(Login login) {

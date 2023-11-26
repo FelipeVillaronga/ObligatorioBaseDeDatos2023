@@ -4,48 +4,36 @@
   <div class="form-group">
     <label for="ci">C.I</label>
     <input type="text" formControlName="ci">
-    <div *ngIf="formUpdate.get('ci')?.invalid && (formUpdate.get('ci')?.dirty || formUpdate.get('ci')?.touched)" class="alert alert-danger">
+    <div *ngIf="formUpdate.get('ci')?.invalid && (formUpdate.get('ci')?.dirty || formUpdate.get('ci')?.touched)"
+      class="alert alert-danger">
       El campo 'C.I' es obligatorio
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="name">Nombre</label>
-    <input type="text" formControlName="name">
-    <div *ngIf="formUpdate.get('name')?.invalid && (formUpdate.get('name')?.dirty || formUpdate.get('name')?.touched)" class="alert alert-danger">
-      El campo 'Nombre' es obligatorio
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="surname">Apellido</label>
-    <input type="text" formControlName="surname">
-    <div *ngIf="formUpdate.get('surname')?.invalid && (formUpdate.get('surname')?.dirty || formUpdate.get('surname')?.touched)" class="alert alert-danger">
-      El campo 'Apellido' es obligatorio
     </div>
   </div>
 
   <div class="form-group">
     <label for="expiration_date">Fecha de Expiración</label>
     <input type="date" formControlName="expiration_date">
-    <div *ngIf="formUpdate.get('expiration_date')?.invalid && (formUpdate.get('expiration_date')?.dirty || formUpdate.get('expiration_date')?.touched)" class="alert alert-danger">
+    <div
+      *ngIf="formUpdate.get('expiration_date')?.invalid && (formUpdate.get('expiration_date')?.dirty || formUpdate.get('expiration_date')?.touched)"
+      class="alert alert-danger">
       El campo 'Fecha de Nacimiento' es obligatorio
     </div>
   </div>
 
   <div class="form-group">
     <label for="file">Archivo</label>
-    <input type="file" (change)="handleFileUpload($event)" formControlName="file">
-    <div *ngIf="formUpdate.get('file')?.value">
-      <p>Nombre del archivo: {{ formUpdate.get('file')?.value.name }}</p>
-      <p>Tipo de archivo: {{ formUpdate.get('file')?.value.type }}</p>
-      <p>Tamaño del archivo: {{ formUpdate.get('file')?.value.size }} bytes</p>
+    <input type="file" (change)="handleFileUpload($event)" formControlName="file" required>
+    <div *ngIf="fileDetails">
+      <p *ngIf="fileDetails">Nombre del archivo: {{fileDetails.name}}</p>
+      <p *ngIf="fileDetails">Tipo de archivo: {{fileDetails.type}}</p>
+
     </div>
   </div>
 
   <div class="btn-container">
-    <button type="submit" class="btn" [class.btn-success]="formUpdate.valid" [class.btn-danger]="!formUpdate.valid" [disabled]="!formUpdate.valid">
-      Registrar Funcionario
+    <button type="submit" class="btn" [class.btn-success]="formUpdate.valid" [class.btn-danger]="!formUpdate.valid"
+      [disabled]="!formUpdate.valid">
+      Guardar cambios
     </button>
   </div>
 </form>

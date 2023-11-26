@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from "../../services/user.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { catchError } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,8 +20,6 @@ export class UpdateComponent {
   constructor(private userService: UserService, private formBuilder: FormBuilder, private router: Router) {
     this.formUpdate = this.formBuilder.group({
       ci: ['', Validators.required],
-      name: ['', Validators.required],
-      surname: ['', Validators.required],
       file: [null, Validators.required],
       expiration_date: [null, Validators.required],
     });
@@ -38,37 +37,42 @@ export class UpdateComponent {
   }
 
   submitData(): void {
-    try {
-      let parsedCi: number = parseInt(this.formUpdate.value.ci, 10);
-      this.userService.submitData(parsedCi, this.formUpdate.value.name, this.formUpdate.value.surname, this.formUpdate.value.expiration_date, this.formUpdate.value.fileDetails);
-      this.formUpdate = this.formBuilder.group({
-        ci: ['', Validators.required],
-        name: ['', Validators.required],
-        surname: ['', Validators.required],
-        file: [null, Validators.required],
-        expiration_date: [null, Validators.required],
-      });
-    } catch (error) {
-      alert('¡Cedula invalida!');
+    const parsedCi: number = parseInt(this.formUpdate.value.ci);
+    if (isNaN(parsedCi)) {
+      alert('¡Cédula inválida!');
+      return;
     }
+
+    this.userService.submitData(parsedCi, this.formUpdate.value.expiration_date, this.file)
+      .subscribe({
+        next: () => {
+          alert('¡Carnet de salud registrado con éxito!');
+          this.formUpdate.reset();
+        },
+        error: (error) => {
+          console.error(error);
+          alert('Ocurrió un error al registrar el carnet de salud. Por favor, intenta nuevamente.');
+        }
+      });
   }
 
   fileDetails: any;
-  selectedDate: string | null = null;
-
+  file: any;
   handleFileUpload(event: any): void {
-    const fileInput = event.target;
-    const file = fileInput.files && fileInput.files.length > 0 ? fileInput.files[0] : null;
-
+    const file = event.target.files && event.target.files.length > 0 ? event.target.files[0] : null;
     if (file) {
       this.fileDetails = {
+        file: file,
         name: file.name,
         type: file.type,
         size: file.size
       };
-
-    } else {
-      this.fileDetails = null;
     }
-  }
+    const file2 = event.target.files[0];
+    if (file2) {
+      console.log(file2);
+      this.file= file2;
+    }}
+  
+
 }
