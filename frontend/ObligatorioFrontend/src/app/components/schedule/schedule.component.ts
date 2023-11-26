@@ -4,7 +4,7 @@ import { ISchedule } from 'src/app/interfaces/schedule';
 import { IUser } from 'src/app/interfaces/user';
 import { UserService } from 'src/app/services/user.service';
 import { ScheduleService } from 'src/app/services/schedule.service';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
@@ -15,7 +15,8 @@ export class ScheduleComponent implements OnInit {
     private scheduleService: ScheduleService,
     private router: Router,
     private userService: UserService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location : Location
   ) { }
 
   freeSchedules: ISchedule[] = [];
@@ -75,5 +76,9 @@ export class ScheduleComponent implements OnInit {
           });
       }
     });
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }
