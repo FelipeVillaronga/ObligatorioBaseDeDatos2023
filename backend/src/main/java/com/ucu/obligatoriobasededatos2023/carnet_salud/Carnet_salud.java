@@ -1,6 +1,7 @@
 package com.ucu.obligatoriobasededatos2023.carnet_salud;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ucu.obligatoriobasededatos2023.funcionario.funcionario.Funcionario;
 import jakarta.persistence.*;
 
@@ -12,6 +13,7 @@ import java.util.Date;
 @Table(name = "carnet_salud")
 public class Carnet_salud  {
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     @Column(name = "Fch_Vencimiento")
     private Date fecha_vencimiento;
 
@@ -22,6 +24,7 @@ public class Carnet_salud  {
     private Funcionario ci;
 
     @Id
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     @Column(name = "fch_emision")
     private Date fecha_emision;
 

@@ -16,7 +16,7 @@ export class UpdateComponent {
     this.formUpdate = this.formBuilder.group({
       ci: ['', Validators.required],
       file: [null, Validators.required],
-      expiration_date: ['', Validators.required],
+      expiration_date: [null, Validators.required],
     });
   }
 
@@ -26,8 +26,8 @@ export class UpdateComponent {
       alert('¡Cédula inválida!');
       return;
     }
-  
-    this.userService.submitData(parsedCi, "2025/01/01", this.formUpdate.value.file)
+
+    this.userService.submitData(parsedCi, this.formUpdate.value.expiration_date, this.file)
       .subscribe({
         next: () => {
           alert('¡Carnet de salud registrado con éxito!');
@@ -39,19 +39,24 @@ export class UpdateComponent {
         }
       });
   }
-  
-  
 
   fileDetails: any;
+  file: any;
   handleFileUpload(event: any): void {
     const file = event.target.files && event.target.files.length > 0 ? event.target.files[0] : null;
     if (file) {
-      this.formUpdate.patchValue({ file });
       this.fileDetails = {
+        file: file,
         name: file.name,
         type: file.type,
         size: file.size
       };
     }
-  }
+    const file2 = event.target.files[0];
+    if (file2) {
+      console.log(file2);
+      this.file= file2;
+    }}
+  
+
 }

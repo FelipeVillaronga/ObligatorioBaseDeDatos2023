@@ -22,6 +22,8 @@ public class Carnet_saludService {
     }
 
     public void addCarnet_salud(Carnet_salud carnet_salud) {
+        var ci= carnet_salud.getCi().getCi();
+        deleteCarnet_salud(ci);
         carnet_saludRepository.save(carnet_salud);
     }
 
@@ -30,11 +32,10 @@ public class Carnet_saludService {
         if (carnet_saludExists){
             carnet_saludRepository.deleteById(ci);
         }
-
     }
+
     public void updateCarnet_salud(long ci, Carnet_salud carnet_salud) {
         deleteCarnet_salud(ci);
         carnet_saludRepository.save(carnet_salud);
-
     }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IUser } from '../interfaces/user';
 
-import { Observable, of, catchError, tap, throwError, map, mergeMap } from 'rxjs';
+import { Observable, of, catchError, tap, throwError, map, mergeMap, switchMap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ILogin } from '../interfaces/login';
 import { LoginService } from './login.service';
@@ -130,13 +130,46 @@ export class UserService {
    * @param fileDetails 
    * @returns 
    */
-  submitData(ci: number, expiration_date: Date, file: File): Observable<void> {
-    return this.http.put<void>(`http://localhost:8080/api/carnet_salud/${ci}`, { ci: ci, fecha_emision: new Date(), fecha_vencimiento: expiration_date, comprobante: file }, this.httpOptions)
-      .pipe(
-        tap(_ => console.log(`updated user w/ id=${ci}`)),
-        catchError(this.handleError<void>('submitData'))
-      );
+  submitData(ci: number, expiration_date: string, file: File): Observable<void> {
+    return new Observable(observer => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        const base64File = reader.result as string;
+        const base64Data = base64File.split(',')[1];
+        const now = new Date();
+        const fecha_emision = now.toISOString();
+        expiration_date = new Date(expiration_date).toISOString();
+  
+        this.getUser(ci).pipe(
+          catchError((error) => {
+            console.error(error);
+            alert('Ocurrió un error al encontrar el usuario. Por favor, intenta nuevamente.');
+            return throwError(error);
+          }),
+          switchMap((funcionario: IUser) => {
+            return this.http.post<void>(`http://localhost:8080/api/carnet_salud`, {
+              ci: funcionario,
+              fecha_emision: fecha_emision,
+              fecha_vencimiento: expiration_date,
+              comprobante: base64Data
+            }, this.httpOptions).pipe(
+              tap(_ => console.log(`updated user w/ id=${ci}`)),
+              catchError((error) => {
+                console.error(error);
+                alert('Ocurrió un error al actualizar el carnet de salud. Por favor, intenta nuevamente.');
+                return throwError(error);
+              })
+            );
+          })
+        ).subscribe(result => observer.next(result), error => observer.error(error));
+      };
+    });
   }
+
+
+  
+
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
