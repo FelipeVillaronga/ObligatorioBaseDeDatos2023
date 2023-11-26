@@ -24,11 +24,6 @@ public class FuncionarioService {
         return funcionarioRepository.findById(ci).orElse(null);
     }
 
-    public void addFuncionario(Funcionario funcionario) {
-        loginRepository.save(funcionario.getLogin());
-        funcionarioRepository.save(funcionario);
-    }
-
     public void deleteFuncionario(long ci) {
         boolean funcionarioExists = funcionarioRepository.existsById(ci);
         if (funcionarioExists){
@@ -44,6 +39,15 @@ public class FuncionarioService {
             System.out.println(b.getApellido());
         }
     return a;
+    }
+
+    public void addFuncionario(Funcionario funcionario) {
+        Long logId = funcionario.getLogin().getLogId();
+        if (loginRepository.existsById(logId)) {
+            throw new IllegalArgumentException("LogId is already in use");
+        }
+        loginRepository.save(funcionario.getLogin());
+        funcionarioRepository.save(funcionario);
     }
 
     public Funcionario getFuncionarioByLogId(long logId) {
