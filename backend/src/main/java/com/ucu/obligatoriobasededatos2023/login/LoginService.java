@@ -36,7 +36,6 @@ public class LoginService {
         try {
             loginRepository.save(login);
         } catch (DataIntegrityViolationException ex) {
-            
             System.err.println("Error: El usuario ya existe con el mismo LogId.");
         }
     }

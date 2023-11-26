@@ -23,7 +23,7 @@ export class RegisterComponent {
         .pipe(
           catchError((error) => {
             console.error(error);
-            alert('Ocurrió un error al registrar el usuario. Por favor, intenta nuevamente.');
+            alert('Ocurrió un error al registrar el usuario. Probablemente ese ID esté en uso. Por favor, intenta nuevamente.');
             throw error;
           })
         )
@@ -35,7 +35,7 @@ export class RegisterComponent {
           },
           error: (error) => {
             console.error(error);
-            alert('Ocurrió un error al registrar el usuario. Por favor, intenta nuevamente.');
+            alert('Ocurrió un error al registrar el usuario. Probablemente ese ID esté en uso. Por favor, intenta nuevamente.');
           }
         });
     } catch (error) {
