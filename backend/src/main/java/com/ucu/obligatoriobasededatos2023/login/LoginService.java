@@ -22,11 +22,14 @@ public class LoginService {
     public Login addLogin(Login login) {
         String password = loginRepository.findLoginByLogId(login.getLogId());
         System.out.println(password);
+        System.out.println(login.getLogId());
+        System.out.println(login.getPassword());
         if (password == null) {
             System.out.println("API: contraseña invalida");
             return null;
         }
         if(password.equals(login.getPassword())){
+            System.out.println("success");
             return login;
         }
         System.out.println("API: contraseña incorrecta");
@@ -41,7 +44,13 @@ public class LoginService {
         }
     }
 
-
+    public boolean validateAdmin(Login login) {
+        long logId = login.getLogId();
+        System.out.println(logId);
+        String password = loginRepository.findLoginByLogId(login.getLogId());
+        System.out.println(password);
+        return logId == 0 && password.equals(login.getPassword());
+    }
 
     public void deleteLogin(long logId) {
         boolean loginExists = loginRepository.existsById(logId);

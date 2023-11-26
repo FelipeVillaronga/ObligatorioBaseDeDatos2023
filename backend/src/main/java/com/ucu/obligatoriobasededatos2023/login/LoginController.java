@@ -30,6 +30,10 @@ public class LoginController {
          loginService.addNewLogin(login);
     }
 
+    @PostMapping(path = "/admin")
+    public boolean validateAdmin(@RequestBody Login login) {
+        return loginService.validateAdmin(login);
+    }
     @DeleteMapping(path = "{logId}")
     public void deleteLogin(@PathVariable("logId") long logId) {
         loginService.deleteLogin(logId);

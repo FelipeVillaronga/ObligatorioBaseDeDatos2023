@@ -16,7 +16,7 @@ export class LoginComponent {
     this.loginService.sendLogin(this.model.logId, this.model.password).subscribe(
       (response) => {
         console.log(response);
-        if (response && response.logId) {
+        if (response && response.logId !== undefined) {
           const id = response.logId;
           this.router.navigate(['/menu', id]);
         } else {
