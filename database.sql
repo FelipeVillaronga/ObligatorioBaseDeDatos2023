@@ -2,7 +2,7 @@ create database Obligatorio;
 use Obligatorio;
 CREATE TABLE login (
     LogId INT PRIMARY KEY,
-    Password VARCHAR(30)
+    Password VARCHAR(100)
 );
 CREATE TABLE funcionarios (
     Ci INT PRIMARY KEY,
