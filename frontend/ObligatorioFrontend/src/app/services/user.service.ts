@@ -5,6 +5,7 @@ import { Observable, of, catchError, tap, throwError, map, mergeMap } from 'rxjs
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ILogin } from '../interfaces/login';
 import { LoginService } from './login.service';
+import { IUpdatePeriods } from '../interfaces/updatePeriods';
 
 @Injectable({
   providedIn: 'root'
@@ -99,9 +100,14 @@ export class UserService {
             alert('Autenticación incorrecta. Verifique la contraseña que le fue enviada por la Universidad.');
             return of(false);
           }
-
-          const url = 'http://localhost:8080/api/periodo_actualizacion';
-          return this.http.put<boolean>(url, { anio: year, semestre: semester, startDate, endDate }, this.httpOptions).pipe(
+          let anio = parseInt(year);
+          const url = 'http://localhost:8080/api/periodo_actualizacion'; 
+          let sem = 1
+          if(semester == "Segundo Semestre"){
+            sem = 2
+          }
+          console.log(anio, sem, startDate, endDate);
+          return this.http.post<boolean>(`${url}`, { anio: anio, semestre: sem, fch_inicio: startDate,  fch_fin: endDate }, this.httpOptions).pipe(
             catchError(this.handleError<boolean>('changeUpdatePeriods'))
           );
         })
@@ -110,6 +116,36 @@ export class UserService {
       return throwError(err);
     }
   }
+  getMostRecentPeriod(): Observable<boolean> {
+    const currentDate: Date = new Date();
+
+    const url = 'http://localhost:8080/api/periodo_actualizacion';
+
+    return this.http.get<any[]>(url).pipe(
+        tap(_ => console.log('fetched update periods')),
+        map((periods: any[]) => {
+          console.log(periods);
+            const closestFuturePeriod = periods.find((period: any) => {
+                const startDate = new Date(period.fch_inicio);
+                const endDate = new Date(period.fch_fin);
+
+               
+                if (parseInt(period.anio) >= currentDate.getFullYear() &&
+                    currentDate >= startDate && currentDate <= endDate) {
+                    return true;
+                }
+
+                return false;
+            });
+
+          
+            return !!closestFuturePeriod;
+        }),
+        catchError(this.handleError<boolean>('getMostRecentPeriod'))
+    );
+}
+
+
 
   private validateAdmin(logId: number, password: string): Observable<boolean> {
     return this.loginService.sendLogin(logId, password).pipe(

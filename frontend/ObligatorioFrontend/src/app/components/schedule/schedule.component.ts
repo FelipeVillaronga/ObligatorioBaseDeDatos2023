@@ -21,6 +21,15 @@ export class ScheduleComponent implements OnInit {
   user: IUser | undefined;
 
   ngOnInit(): void {
+
+    this.userService.getMostRecentPeriod().subscribe((response) => {
+      if(response == false){
+        alert("PERIODO FINALIZADO")
+        this.router.navigate(['/index']);
+      }
+    });
+
+
     this.scheduleService.getFreeSchedules().subscribe((response) => {
       this.freeSchedules = response;
       console.log(this.freeSchedules);
@@ -47,7 +56,7 @@ export class ScheduleComponent implements OnInit {
             if (response) {
               console.log('sended');
               alert('Cita agendada');
-              this.router.navigate(['/schedule']);
+              this.router.navigate(['/index']);
             } else {
               alert('Credenciales incorrectas');
             }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from "../../services/user.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-update',
@@ -8,10 +9,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./update.component.css']
 })
 export class UpdateComponent {
+  
 
   formUpdate: FormGroup;
+  
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder,) {
+  
+
+  constructor(private userService: UserService, private formBuilder: FormBuilder, private router: Router) {
     this.formUpdate = this.formBuilder.group({
       ci: ['', Validators.required],
       name: ['', Validators.required],
@@ -19,6 +24,17 @@ export class UpdateComponent {
       file: [null, Validators.required],
       expiration_date: [null, Validators.required],
     });
+  }
+
+
+  ngOnInit(): void {
+    this.userService.getMostRecentPeriod().subscribe((response) => {
+      if(response == false){
+        alert("PERIODO FINALIZADO")
+        this.router.navigate(['/index']);
+      }
+    });
+
   }
 
   submitData(): void {
