@@ -16,4 +16,6 @@ public interface Periodo_actualizacionRepository extends JpaRepository<Periodos_
     @Modifying
     @Query("DELETE FROM Periodos_actualizacion p WHERE p.anio = ?1")
     void deleteTodosDeAnio(long anio);
+
+
 }
