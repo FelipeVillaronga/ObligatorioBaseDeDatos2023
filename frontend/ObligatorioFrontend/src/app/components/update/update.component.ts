@@ -46,12 +46,10 @@ export class UpdateComponent {
     this.userService.submitData(parsedCi, this.formUpdate.value.expiration_date, this.file)
       .subscribe({
         next: () => {
-          alert('¡Carnet de salud registrado con éxito!');
           this.formUpdate.reset();
         },
         error: (error) => {
           console.error(error);
-          alert('Ocurrió un error al registrar el carnet de salud. Por favor, intenta nuevamente.');
         }
       });
   }

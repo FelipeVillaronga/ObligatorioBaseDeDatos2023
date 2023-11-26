@@ -16,46 +16,44 @@ export class ScheduleComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private route: ActivatedRoute,
-    private location : Location
+    private location: Location
   ) { }
 
   freeSchedules: ISchedule[] = [];
-  user: IUser | undefined;
+  user: any;
   ci: number = 1;
 
   ngOnInit(): void {
 
     this.userService.getMostRecentPeriod().subscribe((response) => {
-      if(response == false){
+      if (response == false) {
         alert("PERIODO FINALIZADO")
-        this.router.navigate(['/index']);
+        this.goBack();
       }
     });
-
 
     this.scheduleService.getFreeSchedules().subscribe((response) => {
       this.freeSchedules = response;
       console.log(this.freeSchedules);
     });
 
-
     this.route.params.subscribe(params => {
       const logid = params['id'];
       console.log(logid);
-      this.userService.getUserByLogId(logid).subscribe((response) => {
+      this.userService.getUser(logid).subscribe((response) => {
         this.ci = response.ci;
         console.log(this.user);
       });
-  });
-}
+    });
+  }
 
-  scheduleSubmit(fch_agenda: any,  nro: number) {
+  scheduleSubmit(fch_agenda: any, nro: number) {
     // Convertir fch_agenda a un objeto Date si no lo es
     const schedule_date = new Date(fch_agenda);
-    
-    this.userService.getUser(this.ci).subscribe((response) => {
+
+    this.userService.getUserByLogId(this.ci).subscribe((response) => {
       this.user = response;
-      console.log(this.user);
+      console.log(this.user.ci);
       if (this.user != null) {
         console.log(schedule_date);
         this.scheduleService
@@ -69,7 +67,7 @@ export class ScheduleComponent implements OnInit {
             if (response) {
               console.log('sended');
               alert('Cita agendada');
-              this.router.navigate(['/index']);
+              this.goBack();
             } else {
               alert('Credenciales incorrectas');
             }

@@ -11,7 +11,7 @@ export class MenuComponent {
 
   currentId?: string;
 
-  constructor(private userService: UserService,private route: ActivatedRoute ) {}
+  constructor(private userService: UserService, private route: ActivatedRoute) { }
 
 
   ngOnInit() {
@@ -21,8 +21,5 @@ export class MenuComponent {
         this.currentId = id;
       }
     });
- 
-    
- 
   }
 }

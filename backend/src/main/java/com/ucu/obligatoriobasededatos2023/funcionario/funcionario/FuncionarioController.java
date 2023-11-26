@@ -11,6 +11,7 @@ import java.util.List;
 public class FuncionarioController {
     private final FuncionarioService funcionarioService;
 
+
     @Autowired
     public FuncionarioController(FuncionarioService funcionarioService) {
         this.funcionarioService = funcionarioService;
@@ -32,8 +33,8 @@ public class FuncionarioController {
     }
 
     @PostMapping
-    public void addFuncionario(@RequestBody Funcionario funcionario) {
-        funcionarioService.addFuncionario(funcionario);
+    public Funcionario addFuncionario(@RequestBody Funcionario funcionario) {
+        return funcionarioService.addFuncionario(funcionario);
     }
 
     @DeleteMapping(path = "{ci}")

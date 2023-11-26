@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ILogin } from '../interfaces/login';
 import { LoginService } from './login.service';
 import { IUpdatePeriods } from '../interfaces/updatePeriods';
+import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 
 @Injectable({
   providedIn: 'root'
@@ -40,17 +41,17 @@ export class UserService {
    * 
    * @param ci
   */
-  getUser(ci: number): Observable<IUser> {
+  getUser(ci: number): Observable<any> {
     if (this.cachedUser && this.cachedUser.ci === ci) {
       return of(this.cachedUser);
     } else {
       const url = `${this.usersUrl}/${ci}`;
-      return this.http.get<IUser>(url).pipe(
-        tap((user: IUser) => {
+      return this.http.get<any>(url).pipe(
+        tap((user: any) => {
           this.cachedUser = user;
           console.log(`fetched user id=${ci}`);
         }),
-        catchError(this.handleError<IUser>(`getUser id=${ci}`))
+        catchError(this.handleError<any>(`getUser id=${ci}`))
       );
     }
   }
@@ -67,17 +68,16 @@ export class UserService {
    * @param log_id 
    * @returns 
    */
-  add(ci: number, name: string, surname: string, birth_date: Date, address: string, phone_number: string, email: string, username: number, password: string): Observable<boolean> {
-    const log = { logId: username, password: password } as ILogin;
+  add(ci: number, name: string, surname: string, birth_date: Date, address: string, phone_number: string, email: string, password: string): Observable<any> {
+    const log = { logId: 100, password: password } as ILogin; // el 100 se modifica en el back
 
-    return this.http.post<boolean>(this.usersUrl, { ci: ci, nombre: name, apellido: surname, fchNacimiento: birth_date, direccion: address, telefono: phone_number, email: email, login: log }, this.httpOptions)
+    return this.http.post<any>(this.usersUrl, { ci: ci, nombre: name, apellido: surname, fchNacimiento: birth_date, direccion: address, telefono: phone_number, email: email, login: log }, this.httpOptions)
       .pipe(
-        tap((response) => {
-          console.log(`added user w/ id=${response}`);
-          alert('Usuario registrado con exito!');
-          // llevar a 'lobby'
+        tap((response: any) => {
+          console.log(`added user w/ id=${response.ci}`);
+          alert(`Usuario registrado con exito. ¡Importante! Tu id para iniciar sesion es: ${response.login.logId}`);
         }),
-        catchError(this.handleError<boolean>('add'))
+        catchError(this.handleError<any>('add'))
       );
   }
 
@@ -199,12 +199,12 @@ export class UserService {
     });
   }
 
-  getUserByLogId(logId: number): Observable<IUser> {
+  getUserByLogId(logId: number): Observable<any> {
     const url = `${this.usersUrl}/id/${logId}`;
 
-    return this.http.get<IUser>(url, this.httpOptions).pipe(
+    return this.http.get<any>(url, this.httpOptions).pipe(
       tap(_ => console.log(`fetched user id=${logId}`)),
-      catchError(this.handleError<IUser>(`getUser id=${logId}`))
+      catchError(this.handleError<any>(`getUser id=${logId}`))
     );
 
   }
