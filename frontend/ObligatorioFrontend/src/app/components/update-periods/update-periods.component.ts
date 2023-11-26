@@ -12,7 +12,7 @@ export class UpdatePeriodsComponent {
 
   constructor(private location: Location, private userService: UserService) { }
 
-  model = { year: '', semester: '', startDate: '', endDate: '', logId: '', password: ''  };
+  model = { year: '', semester: '', startDate: '', endDate: '', logId: '', password: '' };
 
   changeUpdatePeriods(): void {
     try {
@@ -27,7 +27,7 @@ export class UpdatePeriodsComponent {
         .subscribe({
           next: (res: boolean) => {
             console.log(res);
-            alert('¡Período de actualización modificado!');
+            if (res) { alert('¡Período de actualización modificado!'); }
             this.model = { year: '', semester: '', startDate: '', endDate: '', logId: '', password: '' };
             this.goBack();
           },

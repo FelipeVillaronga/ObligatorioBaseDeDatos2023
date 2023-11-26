@@ -13,29 +13,25 @@ export class RegisterComponent {
 
   constructor(private userService: UserService, private router: Router) { }
 
-  model = { ci: '', name: '', surname: '', birth_date: '', address: '', email: '', phone_number: '', username: '', password: '' };
+  model = { ci: '', name: '', surname: '', birth_date: '', address: '', email: '', phone_number: '', password: '' };
 
   async registerUser(): Promise<void> {
     try {
       let parsedCi: number = parseInt(this.model.ci);
-      let parsedLogId: number = parseInt(this.model.username);
-      this.userService.add(parsedCi, this.model.name, this.model.surname, new Date(this.model.birth_date), this.model.address, this.model.phone_number, this.model.email, parsedLogId, this.model.password)
+      this.userService.add(parsedCi, this.model.name, this.model.surname, new Date(this.model.birth_date), this.model.address, this.model.phone_number, this.model.email, this.model.password)
         .pipe(
           catchError((error) => {
             console.error(error);
-            alert('Ocurrió un error al registrar el usuario. Probablemente ese ID esté en uso. Por favor, intenta nuevamente.');
             throw error;
           })
         )
         .subscribe({
-          next: (res: boolean) => {
+          next: (res: IUser) => {
             console.log(res);
-            alert('Usuario registrado con éxito!');
             this.router.navigate([`/login`]);
           },
           error: (error) => {
             console.error(error);
-            alert('Ocurrió un error al registrar el usuario. Probablemente ese ID esté en uso. Por favor, intenta nuevamente.');
           }
         });
     } catch (error) {

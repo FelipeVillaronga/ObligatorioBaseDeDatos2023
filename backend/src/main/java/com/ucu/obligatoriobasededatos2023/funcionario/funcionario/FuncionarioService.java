@@ -45,18 +45,19 @@ public class FuncionarioService {
     return a;
     }
 
-    public void addFuncionario(Funcionario funcionario) {
-        Long logId = funcionario.getLogin().getLogId();
-        if (loginRepository.existsById(logId)) {
-            throw new IllegalArgumentException("LogId is already in use");
-        }
+    public Funcionario addFuncionario(Funcionario funcionario) {
+        Long logId = funcionarioRepository.count() + 1;
 
         //HASHEO
         String hashedPassword = passwordEncoder.encode(funcionario.getLogin().getPassword());
         funcionario.getLogin().setPassword(hashedPassword);
+        funcionario.getLogin().setLogId(logId);
 
         loginRepository.save(funcionario.getLogin());
         funcionarioRepository.save(funcionario);
+        System.out.println(funcionario.getLogin().getLogId());
+        System.out.println(funcionario.getApellido());
+        return funcionario;
     }
 
     public Funcionario getFuncionarioByLogId(long logId) {

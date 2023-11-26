@@ -116,4 +116,5 @@ public class Funcionario {
     public void setLogin(Login login) {
         this.login = login;
     }
+
 }

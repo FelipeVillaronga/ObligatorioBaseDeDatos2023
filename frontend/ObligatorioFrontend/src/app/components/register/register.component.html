@@ -25,15 +25,6 @@
                     El campo 'Apellido' es obligatorio
                 </div>
             </div>
-            
-            <div class="form-group">
-                <label for="username">Nombre de usuario</label>
-                <input type="text" class="form-control" id="username" required [(ngModel)]="model.username" name="username"
-                    #username="ngModel">
-                <div [hidden]="username.valid || username.pristine" class="alert alert-danger">
-                    El campo 'Nombre de usuario es obligatorio
-                </div>
-            </div>
             <div class="form-group">
                 <label for="password">Contraseña</label>
                 <input type="text" class="form-control" id="password" required [(ngModel)]="model.password" name="password"
