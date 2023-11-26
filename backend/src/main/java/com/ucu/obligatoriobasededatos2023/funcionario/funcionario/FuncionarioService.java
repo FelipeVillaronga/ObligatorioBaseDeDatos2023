@@ -45,4 +45,8 @@ public class FuncionarioService {
         }
     return a;
     }
+
+    public Funcionario getFuncionarioByLogId(long logId) {
+        return funcionarioRepository.getFuncionarioByLogId(logId);
+    }
 }

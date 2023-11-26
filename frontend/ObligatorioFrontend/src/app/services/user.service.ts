@@ -174,6 +174,16 @@ export class UserService {
       );
   }
 
+  getUserByLogId(logId: number): Observable<IUser> {
+    const url = `${this.usersUrl}/id/${logId}`;
+
+    return this.http.get<IUser>(url, this.httpOptions).pipe(
+      tap(_ => console.log(`fetched user id=${logId}`)),
+      catchError(this.handleError<IUser>(`getUser id=${logId}`))
+    );
+    
+  }
+
   
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

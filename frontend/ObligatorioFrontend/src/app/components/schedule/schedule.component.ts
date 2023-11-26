@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ISchedule } from 'src/app/interfaces/schedule';
 import { IUser } from 'src/app/interfaces/user';
 import { UserService } from 'src/app/services/user.service';
@@ -14,11 +14,13 @@ export class ScheduleComponent implements OnInit {
   constructor(
     private scheduleService: ScheduleService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private route: ActivatedRoute
   ) { }
 
   freeSchedules: ISchedule[] = [];
   user: IUser | undefined;
+  ci: number = 1;
 
   ngOnInit(): void {
 
@@ -34,13 +36,23 @@ export class ScheduleComponent implements OnInit {
       this.freeSchedules = response;
       console.log(this.freeSchedules);
     });
-  }
 
-  scheduleSubmit(fch_agenda: any, ci: number, nro: number) {
+
+    this.route.params.subscribe(params => {
+      const logid = params['id'];
+      console.log(logid);
+      this.userService.getUserByLogId(logid).subscribe((response) => {
+        this.ci = response.ci;
+        console.log(this.user);
+      });
+  });
+}
+
+  scheduleSubmit(fch_agenda: any,  nro: number) {
     // Convertir fch_agenda a un objeto Date si no lo es
     const schedule_date = new Date(fch_agenda);
-
-    this.userService.getUser(56223274).subscribe((response) => {
+    
+    this.userService.getUser(this.ci).subscribe((response) => {
       this.user = response;
       console.log(this.user);
       if (this.user != null) {
