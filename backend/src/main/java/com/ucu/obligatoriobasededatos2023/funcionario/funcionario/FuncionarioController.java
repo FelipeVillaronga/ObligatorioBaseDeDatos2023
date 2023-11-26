@@ -21,6 +21,11 @@ public class FuncionarioController {
         return funcionarioService.getFuncionarios();
     }
 
+    @GetMapping("/id/{logId}")
+    public Funcionario getFuncionarioByLogId(@PathVariable("logId") long logId) {
+        return funcionarioService.getFuncionarioByLogId(logId);
+    }
+
     @GetMapping("{ci}")
     public Funcionario getFuncionario(@PathVariable("ci") long ci) {
         return funcionarioService.getFuncionario(ci);

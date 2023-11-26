@@ -2,8 +2,10 @@ package com.ucu.obligatoriobasededatos2023.periodos_actualizacion;
 
 import com.ucu.obligatoriobasededatos2023.login.Login;
 import com.ucu.obligatoriobasededatos2023.login.LoginRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
@@ -23,15 +25,17 @@ public class Periodo_actualizacionService {
     public void addPeriodo_actualizacion(Periodos_actualizacion periodosActualizacion) {
         periodo_actualizacionRepository.save(periodosActualizacion);
     }
+    @Transactional
 
     public void deletePeriodo_actualizacion(long anio) {
-        boolean periodo_actualizacionExists = periodo_actualizacionRepository.existsById(anio);
-        if (periodo_actualizacionExists){
-            periodo_actualizacionRepository.deleteById(anio);
-        }
+
+            periodo_actualizacionRepository.deleteTodosDeAnio(anio);
+
 
     }
     public void updatePeriodo_actualizacion(long anio, Periodos_actualizacion periodosActualizacion) {
+        System.out.println("llego actualizacion");
+
         deletePeriodo_actualizacion(anio);
         periodo_actualizacionRepository.save(periodosActualizacion);
     }

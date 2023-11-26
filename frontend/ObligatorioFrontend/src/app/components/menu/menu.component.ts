@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-menu',
@@ -10,7 +11,7 @@ export class MenuComponent {
 
   currentId?: string;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private userService: UserService,private route: ActivatedRoute ) {}
 
 
   ngOnInit() {
@@ -20,5 +21,8 @@ export class MenuComponent {
         this.currentId = id;
       }
     });
+ 
+    
+ 
   }
 }

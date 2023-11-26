@@ -1,6 +1,7 @@
 package com.ucu.obligatoriobasededatos2023.periodos_actualizacion;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ucu.obligatoriobasededatos2023.carnet_salud.Carnet_saludId;
 import jakarta.persistence.*;
 
@@ -60,9 +61,11 @@ public class Periodos_actualizacion {
     @Column(name = "Semestre")
     private long semestre;
     @Id
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     @Column(name = "Fch_Inicio")
     private Date fch_inicio;
     @Id
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     @Column(name = "Fch_Fin")
     private Date fch_fin;
 
