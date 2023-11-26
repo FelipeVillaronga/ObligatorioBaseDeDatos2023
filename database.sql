@@ -38,3 +38,11 @@ CREATE TABLE periodos_Actualizacion (
     Fch_Fin DATE,
     PRIMARY KEY (Anio, Semestre, Fch_Inicio, Fch_Fin)
 );
+
+
+insert into login values (0, 'admin');
+INSERT INTO agenda (Nro, Ci, Fch_Agenda) VALUES
+                                             (1, NULL, '2023-01-20'),
+                                             (2, NULL, '2023-01-21'),
+                                             (3, NULL, '2023-01-22');
+insert into periodos_Actualizacion value (2023,2,'2023-11-01','2023-11-30');
