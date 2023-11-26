@@ -1,7 +1,10 @@
 package com.ucu.obligatoriobasededatos2023.login;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,30 +13,36 @@ import java.util.List;
 public class LoginService {
     private final LoginRepository loginRepository;
 
-    @Autowired
-    public LoginService(LoginRepository loginRepository) {
-        this.loginRepository = loginRepository;
-    }
+    private final BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    public LoginService(LoginRepository loginRepository, BCryptPasswordEncoder passwordEncoder) {
+        this.loginRepository = loginRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
     public List<Login> getLogins() {
         return loginRepository.findAll();
     }
 
     public Login addLogin(Login login) {
-        String password = loginRepository.findLoginByLogId(login.getLogId());
-        System.out.println(password);
+        String storedPasswordHash = loginRepository.findLoginByLogId(login.getLogId());
+        System.out.println(storedPasswordHash);
         System.out.println(login.getLogId());
         System.out.println(login.getPassword());
-        if (password == null) {
-            System.out.println("API: contraseña invalida");
+
+        if (storedPasswordHash == null) {
+            System.out.println("API: Contraseña inválida");
             return null;
         }
-        if(password.equals(login.getPassword())){
-            System.out.println("success");
+
+        // Utilizar BCryptPasswordEncoder.matches para comparar contraseñas
+        if (passwordEncoder.matches(login.getPassword(), storedPasswordHash)) {
+            System.out.println("Éxito");
             return login;
+        } else {
+            System.out.println("API: Contraseña incorrecta");
+            return null;
         }
-        System.out.println("API: contraseña incorrecta");
-        return null;
     }
     public void addNewLogin(Login login) {
         try {

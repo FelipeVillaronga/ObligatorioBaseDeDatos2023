@@ -3,6 +3,7 @@ package com.ucu.obligatoriobasededatos2023.funcionario.funcionario;
 import com.ucu.obligatoriobasededatos2023.login.Login;
 import com.ucu.obligatoriobasededatos2023.login.LoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,11 +12,14 @@ import java.util.List;
 public class FuncionarioService {
     private final FuncionarioRepository funcionarioRepository;
     private final LoginRepository loginRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+
 
     @Autowired
-    public FuncionarioService(FuncionarioRepository funcionarioRepository, LoginRepository loginRepository) {
+    public FuncionarioService(FuncionarioRepository funcionarioRepository, LoginRepository loginRepository, BCryptPasswordEncoder passwordEncoder) {
         this.funcionarioRepository = funcionarioRepository;
         this.loginRepository = loginRepository;
+        this.passwordEncoder = passwordEncoder;
     }
     public List<Funcionario> getFuncionarios() {
         return funcionarioRepository.findAll();
@@ -46,6 +50,11 @@ public class FuncionarioService {
         if (loginRepository.existsById(logId)) {
             throw new IllegalArgumentException("LogId is already in use");
         }
+
+        //HASHEO
+        String hashedPassword = passwordEncoder.encode(funcionario.getLogin().getPassword());
+        funcionario.getLogin().setPassword(hashedPassword);
+
         loginRepository.save(funcionario.getLogin());
         funcionarioRepository.save(funcionario);
     }
