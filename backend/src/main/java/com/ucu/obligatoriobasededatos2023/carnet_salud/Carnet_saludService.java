@@ -28,9 +28,9 @@ public class Carnet_saludService {
     }
 
     public void deleteCarnet_salud(long ci) {
-        boolean carnet_saludExists = carnet_saludRepository.existsById(ci);
-        if (carnet_saludExists){
-            carnet_saludRepository.deleteById(ci);
+        Carnet_salud carnet_salud = carnet_saludRepository.existsByCi(ci);
+        if (carnet_salud!=null){
+            carnet_saludRepository.delete(carnet_salud);
         }
     }
 
