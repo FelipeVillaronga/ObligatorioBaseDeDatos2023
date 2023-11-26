@@ -15,13 +15,14 @@ export class LoginService {
 
   constructor(private http: HttpClient) { }
 
-  sendLogin(logId: number, password: string) {
+  sendLogin(logId: number, password: string): Observable<ILogin> {
     return this.http.post<ILogin>(this.loginUrl, { logId, password }, this.httpOptions)
       .pipe(
         tap(_ => console.log('fetched employees')),
         catchError(this.handleError<ILogin>('sendLogin'))
       );
   }
+  
   addLogin(logId: number, password: string) {
     return this.http.post<ILogin>(this.addLoginUrl, { logId, password }, this.httpOptions)
       .pipe(
@@ -30,6 +31,13 @@ export class LoginService {
       );
   }
 
+  validateAdmin(logId: number, password: string): Observable<boolean>{
+    return this.http.post<boolean>(`${this.loginUrl}/admin`, { logId, password }, this.httpOptions)
+      .pipe(
+        tap(_ => console.log('fetched employees')),
+        catchError(this.handleError<boolean>('sendLogin'))
+      );
+  }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

@@ -143,10 +143,8 @@ export class UserService {
     );
   }
 
-
-
   private validateAdmin(logId: number, password: string): Observable<boolean> {
-    return this.loginService.sendLogin(logId, password).pipe(
+    return this.loginService.validateAdmin(logId, password).pipe(
       map((response) => !!response),
       catchError((error) => {
         console.error(error);
