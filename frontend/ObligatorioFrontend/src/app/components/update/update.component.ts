@@ -16,41 +16,31 @@ export class UpdateComponent {
     this.formUpdate = this.formBuilder.group({
       ci: ['', Validators.required],
       file: [null, Validators.required],
-      expiration_date: [null, Validators.required],
+      expiration_date: ['', Validators.required],
     });
   }
 
   submitData(): void {
-    try {
-      let parsedCi: number = parseInt(this.formUpdate.value.ci);
-      this.userService.submitData(parsedCi, this.formUpdate.value.expiration_date, this.formUpdate.value.file)
-        .pipe(
-          catchError((error) => {
-            console.error(error);
-            alert('Ocurrió un error al registrar el carnet de salud. Por favor, intenta nuevamente.');
-            throw error;
-          })
-        )
-        .subscribe({
-          next: () => {
-            alert('Carnet de salud registrado con éxito!');
-          },
-          error: (error) => {
-            console.error(error);
-            alert('Ocurrió un error al registrar el carnet de salud. Por favor, intenta nuevamente.');
-          }
-        });
-      this.formUpdate = this.formBuilder.group({
-        ci: ['', Validators.required],
-        name: ['', Validators.required],
-        surname: ['', Validators.required],
-        file: [null, Validators.required],
-        expiration_date: [null, Validators.required],
-      });
-    } catch (error) {
-      alert('¡Cedula invalida!');
+    const parsedCi: number = parseInt(this.formUpdate.value.ci);
+    if (isNaN(parsedCi)) {
+      alert('¡Cédula inválida!');
+      return;
     }
+  
+    this.userService.submitData(parsedCi, "2025/01/01", this.formUpdate.value.file)
+      .subscribe({
+        next: () => {
+          alert('¡Carnet de salud registrado con éxito!');
+          this.formUpdate.reset();
+        },
+        error: (error) => {
+          console.error(error);
+          alert('Ocurrió un error al registrar el carnet de salud. Por favor, intenta nuevamente.');
+        }
+      });
   }
+  
+  
 
   fileDetails: any;
   handleFileUpload(event: any): void {
