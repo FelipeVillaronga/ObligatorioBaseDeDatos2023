@@ -40,8 +40,7 @@ CREATE TABLE periodos_Actualizacion (
 );
 
 
-insert into login values (0, 'admin');
-insert into funcionarios value (1234567,'Administrador','UCU','1950-12-12','Av. 8 de Octubre 2738',999,'email@email.com',0);
+
 INSERT INTO agenda (Nro, Ci, Fch_Agenda) VALUES
                                              (1, NULL, '2023-01-20'),
                                              (2, NULL, '2023-01-21'),
