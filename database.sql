@@ -27,7 +27,7 @@ CREATE TABLE carnet_Salud (
     Ci INT ,
     Fch_Emision DATE,
     Fch_Vencimiento DATE,
-    Comprobante VARCHAR(100),
+    Comprobante LONGBLOB,
     PRIMARY KEY (Ci, Fch_Emision),
     FOREIGN KEY (Ci) REFERENCES funcionarios(Ci)
 );
