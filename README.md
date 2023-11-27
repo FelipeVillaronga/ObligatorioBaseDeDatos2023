@@ -1,5 +1,6 @@
-# ObligatorioBaseDeDatos2023
-
+# ObligatorioBaseDeDatos2023 
+Darracq,Labarte, Villaronga
+https://github.com/tomasdarracq/ObligatorioBaseDeDatos2023.git
 
 ABRIR LA CARPETA backend EN intellij
 
