@@ -57,7 +57,7 @@ public class LoginService {
         System.out.println(logId);
         String password = loginRepository.findLoginByLogId(login.getLogId());
         System.out.println(password);
-        return logId == 0 && password.equals(login.getPassword());
+        return logId == 1 && password.equals(login.getPassword());
     }
 
     public void deleteLogin(long logId) {
