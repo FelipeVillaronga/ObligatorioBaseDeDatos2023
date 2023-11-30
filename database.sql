@@ -20,7 +20,7 @@ CREATE TABLE agenda (
     Nro INT,
     Ci INT,
     Fch_Agenda DATE,
-    PRIMARY KEY (Nro,Ci),
+    PRIMARY KEY (Nro,Fch_Agenda),
     FOREIGN KEY (Ci) REFERENCES funcionarios(Ci)
 );
 CREATE TABLE carnet_Salud (
